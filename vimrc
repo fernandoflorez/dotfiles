@@ -39,6 +39,7 @@ set cursorline
 filetype plugin on
 
 nmap <silent> <D-D> :NERDTreeToggle<CR>
+nmap <silent> <D-A> :TagbarToggle<CR>
 map <silent> <D-C> <Plug>NERDCommenterToggle
 map <silent> <D-X> <Plug>NERDCommenterMinimal
 
