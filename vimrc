@@ -36,6 +36,12 @@ set colorcolumn=80
 " highlight cursor line
 set cursorline
 
+filetype plugin on
+
+nmap <silent> <D-D> :NERDTreeToggle<CR>
+map <silent> <D-C> <Plug>NERDCommenterToggle
+map <silent> <D-X> <Plug>NERDCommenterMinimal
+
 if has('gui_running')
     set guioptions-=T
     set background=light
