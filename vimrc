@@ -42,6 +42,8 @@ nmap <silent> <D-D> :NERDTreeToggle<CR>
 nmap <silent> <D-A> :TagbarToggle<CR>
 map <silent> <D-C> <Plug>NERDCommenterToggle
 map <silent> <D-X> <Plug>NERDCommenterMinimal
+vmap <Tab> >gv
+vmap <S-Tab> <gv
 
 if has('gui_running')
     set guioptions-=T
