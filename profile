@@ -24,6 +24,9 @@ export LANG=en_US.UTF-8
 # Aliases
 alias activate='source bin/activate'
 alias g='git'
+# Autocomplete g command too
+complete -o default -o nospace -F _git g
+
 alias gs='git status'
 alias gss='git status -s'
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
