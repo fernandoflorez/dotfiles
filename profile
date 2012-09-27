@@ -41,8 +41,8 @@ function current_branch() {
 
 alias gs='git status'
 alias gss='git status -s'
-alias gpull="git pull $1 $($2 || $(current_branch))"
-alias gpush="git push $1 $($2 || $(current_branch))"
+alias gpull="git pull $1 $(current_branch)"
+alias gpush="git push $1 $(current_branch)"
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
 alias es_start='elasticsearch -f -D es.config=`brew --prefix elasticsearch`/config/elasticsearch.yml'
 alias redis_start='redis-server /usr/local/etc/redis.conf'
