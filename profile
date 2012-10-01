@@ -28,21 +28,29 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+function current_branch() {
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+    echo ${ref#refs/heads/}
+}
+
+function git_pull() {
+    git pull $1 $([[ $2 ]] && echo $2 || echo $(current_branch))
+}
+
+function git_push() {
+    git push $1 $([[ $2 ]] && echo $2 || echo $(current_branch))
+}
+
 # Aliases
 alias activate='source bin/activate'
 alias g='git'
 # Autocomplete g command too
 complete -o default -o nospace -F _git g
 
-function current_branch() {
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    echo ${ref#refs/heads/}
-}
-
 alias gs='git status'
 alias gss='git status -s'
-alias gpull="git pull $1 $(current_branch)"
-alias gpush="git push $1 $(current_branch)"
+alias gpull='git_pull'
+alias gpush='git_push'
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
 alias es_start='elasticsearch -f -D es.config=`brew --prefix elasticsearch`/config/elasticsearch.yml'
 alias redis_start='redis-server /usr/local/etc/redis.conf'
