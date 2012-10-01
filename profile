@@ -33,11 +33,11 @@ function current_branch() {
     echo ${ref#refs/heads/}
 }
 
-function git_pull() {
+function gpull() {
     git pull $1 $([[ $2 ]] && echo $2 || echo $(current_branch))
 }
 
-function git_push() {
+function gpush() {
     git push $1 $([[ $2 ]] && echo $2 || echo $(current_branch))
 }
 
@@ -49,8 +49,6 @@ complete -o default -o nospace -F _git g
 
 alias gs='git status'
 alias gss='git status -s'
-alias gpull='git_pull'
-alias gpush='git_push'
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
 alias es_start='elasticsearch -f -D es.config=`brew --prefix elasticsearch`/config/elasticsearch.yml'
 alias redis_start='redis-server /usr/local/etc/redis.conf'
