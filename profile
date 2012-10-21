@@ -27,7 +27,6 @@ export PS1="${IBlack}${Time12h}${Color_Off} \$(declare -F __git_ps1 &>/dev/null 
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export PYTHONDONTWRITEBYTECODE=1
 
 function current_branch() {
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
