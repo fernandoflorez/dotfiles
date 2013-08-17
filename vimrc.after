@@ -38,19 +38,8 @@ set cursorline
 
 filetype plugin on
 
-nmap <silent> <D-D> :NERDTreeToggle<CR>
-nmap <silent> <D-A> :TagbarToggle<CR>
-map <silent> <D-C> <Plug>NERDCommenterToggle
-map <silent> <D-X> <Plug>NERDCommenterMinimal
-vmap <Tab> >gv
-vmap <S-Tab> <gv
-
 if has('gui_running')
     set guioptions-=T
-    set background=light
-    autocmd VimEnter * NERDTree
-    autocmd BufEnter * NERDTreeMirror
-    autocmd VimEnter * wincmd w
 else
     let g:solarized_termcolors=256
 endif
