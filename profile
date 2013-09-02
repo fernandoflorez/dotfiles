@@ -41,6 +41,19 @@ function gpush() {
     git push $1 $([[ $2 ]] && echo $2 || echo $(current_branch))
 }
 
+function hackon() {
+    if [ -d "$HOME/projects/$1" ]; then
+        if [ -f "$HOME/projects/$1/bin/activate" ]; then
+            source "$HOME/projects/$1/bin/activate"
+        fi
+        if [ -d "$HOME/projects/$1/src" ]; then
+            cd "$HOME/projects/$1/src"
+        else
+            cd "$HOME/projects/$1"
+        fi
+    fi
+}
+
 # Aliases
 alias activate='source bin/activate'
 alias g='git'
