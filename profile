@@ -29,6 +29,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 function current_branch() {
+    local ref
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
     echo ${ref#refs/heads/}
 }
@@ -41,7 +42,19 @@ function gpush() {
     git push $1 $([[ $2 ]] && echo $2 || echo $(current_branch))
 }
 
+function _hackon() {
+    local opts cur prev
+    opts=`ls -l $HOME/projects/ | egrep '^d' | awk '{print $9}'`
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    return 0
+}
+
 function hackon() {
+    if [[ "$VIRTUAL_ENV" != "" ]]; then
+        deactivate
+    fi
     if [ -d "$HOME/projects/$1" ]; then
         if [ -f "$HOME/projects/$1/bin/activate" ]; then
             source "$HOME/projects/$1/bin/activate"
@@ -53,6 +66,7 @@ function hackon() {
         fi
     fi
 }
+complete -F _hackon hackon
 
 # Aliases
 alias activate='source bin/activate'
