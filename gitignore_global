@@ -21,3 +21,4 @@ local_settings.py
 *.class
 *.swp
 .netrwhist
+celerybeat-schedule.db
