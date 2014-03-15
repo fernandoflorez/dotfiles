@@ -22,3 +22,4 @@ local_settings.py
 *.swp
 .netrwhist
 celerybeat-schedule.db
+.vagrant
