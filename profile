@@ -27,6 +27,8 @@ export PS1="${IBlack}${Time12h}${Color_Off} \$(declare -F __git_ps1 &>/dev/null 
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export CFLAGS=-Qunused-arguments
+export CPPFLAGS=-Qunused-arguments
 
 function current_branch() {
     local ref
