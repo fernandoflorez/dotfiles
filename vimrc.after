@@ -36,6 +36,10 @@ set colorcolumn=80
 " highlight cursor line
 set cursorline
 
+" visual select after tab/untab
+vmap <Tab> >gv
+vmap <S-Tab> <gv
+
 filetype plugin on
 
 if has('gui_running')
