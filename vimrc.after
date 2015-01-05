@@ -49,6 +49,6 @@ else
 endif
 
 " gui colors
-set background=light
+set background=dark
 syntax enable
 colorscheme solarized " https://github.com/altercation/vim-colors-solarized
