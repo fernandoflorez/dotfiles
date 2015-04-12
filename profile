@@ -79,5 +79,5 @@ complete -o default -o nospace -F _git g
 alias gs='git status'
 alias gss='git status -s'
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
-alias es_start='elasticsearch -f -D es.config=`brew --prefix elasticsearch`/config/elasticsearch.yml'
+alias es_start='elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml'
 alias redis_start='redis-server /usr/local/etc/redis.conf'
