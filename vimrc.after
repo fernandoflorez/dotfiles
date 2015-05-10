@@ -40,6 +40,12 @@ set cursorline
 vmap <Tab> >gv
 vmap <S-Tab> <gv
 
+" text bubbling
+nmap <C-k> [e
+nmap <C-j> ]e
+vmap <C-k> [egv
+vmap <C-j> ]egv
+
 filetype plugin on
 
 if has('gui_running')
