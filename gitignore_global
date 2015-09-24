@@ -25,3 +25,6 @@ celerybeat-schedule.db
 .vagrant
 /dist/
 *.egg-info
+inventory
+**/node_modules/*
+ssh_config
