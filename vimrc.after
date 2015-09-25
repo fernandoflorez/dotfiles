@@ -33,6 +33,9 @@ set wildmode=list:longest
 " draw line char 80
 set colorcolumn=80
 
+" set font and font size
+set guifont=Inconsolata-g:h14
+
 " highlight cursor line
 set cursorline
 
