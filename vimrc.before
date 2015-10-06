@@ -1,0 +1,2 @@
+" change map leader
+let mapleader = ","
