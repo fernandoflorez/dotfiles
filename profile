@@ -79,5 +79,6 @@ complete -o default -o nospace -F _git g
 alias gs='git status'
 alias gss='git status -s'
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
-alias es_start='elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml'
 alias redis_start='redis-server /usr/local/etc/redis.conf'
+alias aws-get-instances='aws ec2 describe-instances --query "Reservations[].Instances[].[Tags[0].Value,State.Name,InstanceType,InstanceId,PrivateIpAddress,PublicDnsName,PublicIpAddress]" --output table'
+alias aws-get-images='aws ec2 describe-images --owner=self --query "Images[].[Name,ImageId,State,CreationDate]" --output table'
