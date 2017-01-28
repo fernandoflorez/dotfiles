@@ -11,5 +11,4 @@ endif
 
 " gui colors
 set background=dark
-syntax enable
 colorscheme solarized
