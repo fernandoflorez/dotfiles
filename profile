@@ -1,11 +1,18 @@
 # Added git auto-completion from brew installation
-source `brew --prefix git`/etc/bash_completion.d/git-completion.bash
+if [ command -v brew > /dev/null 2>&1 ]; then
+    source `brew --prefix git`/etc/bash_completion.d/git-completion.bash
 # latest versions of git includes an extra file
-__git_prompt_file=`brew --prefix git`/etc/bash_completion.d/git-prompt.sh
+    __git_prompt_file=`brew --prefix git`/etc/bash_completion.d/git-prompt.sh
+else
+    source /etc/bash_completion.d/git
+    __git_prompt_file=/usr/share/git-core/contrib/completion/git-prompt.sh
+fi
+
 if [ -f "$__git_prompt_file" ]
 then
     source $__git_prompt_file
 fi
+
 
 # Reset
 Color_Off="\[\033[0m\]"       # Text Reset
