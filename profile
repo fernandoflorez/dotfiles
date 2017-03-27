@@ -1,5 +1,5 @@
 # Added git auto-completion from brew installation
-if [ command -v brew > /dev/null 2>&1 ]; then
+if hash brew 2> /dev/null; then
     source `brew --prefix git`/etc/bash_completion.d/git-completion.bash
 # latest versions of git includes an extra file
     __git_prompt_file=`brew --prefix git`/etc/bash_completion.d/git-prompt.sh
