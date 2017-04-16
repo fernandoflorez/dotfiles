@@ -1,11 +1,15 @@
 # Added git auto-completion from brew installation
 if hash brew 2> /dev/null; then
     source `brew --prefix git`/etc/bash_completion.d/git-completion.bash
-# latest versions of git includes an extra file
+    # latest versions of git includes an extra file
     __git_prompt_file=`brew --prefix git`/etc/bash_completion.d/git-prompt.sh
 else
-    source /etc/bash_completion.d/git
-    __git_prompt_file=/usr/share/git-core/contrib/completion/git-prompt.sh
+    __git_bash_completion=/etc/bash_completion.d/git
+    if [ ! -f "$__git_bash_completion" ]
+    then
+    	__git_bash_completion="${__git_bash_completion}-prompt"
+    fi
+    source $__git_bash_completion
 fi
 
 if [ -f "$__git_prompt_file" ]
