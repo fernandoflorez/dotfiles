@@ -1,0 +1,59 @@
+set use_from=yes
+set fast_reply=yes
+set fcc_attach=yes
+set forward_format="Fwd: %s"
+set attribution="On %d, %n wrote:"
+set reply_to=yes
+set reverse_name=yes
+set include=yes
+set forward_quote=yes
+set editor="nvim +/^$ ++1 -c 'set filetype=mail textwidth=0 noautoindent'"
+
+# preview pane
+set pager_index_lines=10
+set pager_context=3
+set pager_stop=yes
+set menu_scroll=yes
+set tilde=yes
+set markers=no
+
+set date_format="%m/%d"
+set index_format="[%Z] %D %-20.20F %s"
+set sort_aux=reverse-last-date-received
+set sort=threads
+set uncollapse_jump=yes
+set sort_re=yes
+
+# headers
+ignore *
+unignore from: to: cc: bcc: date: subject:
+unhdr_order *
+hdr_order from: to: cc: bcc: date: subject:
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+
+set move=no
+set delete=yes
+set quit=yes
+set mail_check=0
+set mark_old=no
+set beep_new=no
+set abort_nosubject=no
+set mime_forward=yes
+set mime_forward_rest=yes
+set reply_regexp="^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set quote_regexp="^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+
+bind editor <space> noop
+macro index,pager y "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive"
+macro index,pager d "<save-message>=[Gmail]/Trash<enter><enter>" "Trash"
+bind index <space>  collapse-thread
+bind index R        group-reply
+
+source ~/.mutt/colors-solarized.muttrc
+source ~/.mutt/sidebar.muttrc
+source ~/.muttaccounts
