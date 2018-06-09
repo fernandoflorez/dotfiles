@@ -57,7 +57,7 @@ function gpush() {
 
 function _hackon() {
     local opts cur prev
-    opts=`ls -l $HOME/projects/ | egrep '^d' | awk '{print $9}'`
+    opts=`ls -l $HOME/projects/ | egrep '^d' | awk '{print $10}'`
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
