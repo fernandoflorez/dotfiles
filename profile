@@ -57,7 +57,7 @@ function gpush() {
 
 function _hackon() {
     local opts cur prev
-    opts=`ls -l $HOME/projects/ | egrep '^d' | awk '{print $10}'`
+    opts=`ls -l $HOME/projects/ | egrep '^d' | awk '{print $NF}'`
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
@@ -94,3 +94,4 @@ alias redis_start='redis-server /usr/local/etc/redis.conf'
 alias aws-get-instances='aws ec2 describe-instances --query "Reservations[].Instances[].[Tags[0].Value,State.Name,InstanceType,InstanceId,PrivateIpAddress,PublicDnsName,PublicIpAddress]" --output table'
 alias aws-get-images='aws ec2 describe-images --owner=self --query "Images[].[Name,ImageId,State,CreationDate]" --output table'
 alias gam="~/bin/gam/gam"
+alias mysql="mysql --prompt=mysql.local\>\ "
