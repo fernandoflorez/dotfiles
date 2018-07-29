@@ -30,3 +30,5 @@ inventory
 ssh_config
 mutt/cache
 mutt/certificates
+fabric.yaml
+docs/_build
