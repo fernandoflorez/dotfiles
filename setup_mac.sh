@@ -95,6 +95,9 @@ defaults write com.apple.AppleBluetoothMultitouchTrackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
+# Display 24 hour clock and date
+defaults write com.apple.menuextra.clock DateFormat -string "EEE MMM d  HH:mm"
+
 killall Finder
 killall Dock
 killall SystemUIServer
