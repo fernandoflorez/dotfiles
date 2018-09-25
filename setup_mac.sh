@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# setup mac's name
+scutil --set ComputerName fernando
+scutil --set LocalHostName fernando
+scutil --set HostName fernando
+
 echo "Installing x-code"
 xcode-select --install
 
@@ -40,10 +45,12 @@ ln -s ~/projects/dotfiles/vimrc.after ~/.vimrc.after
 ln -s ~/projects/dotfiles/vimrc.before ~/.vimrc.before
 
 echo "Cleaning up brew"
-brew cask cleanup
 brew cleanup
 
 echo "Mac OS customization"
+
+# Show battery percentage
+defaults write com.apple.menuextra.battery ShowPercent YES
 
 # Disabling system-wide resume
 defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
@@ -90,5 +97,6 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 killall Finder
 killall Dock
+killall SystemUIServer
 
 echo "Done"
