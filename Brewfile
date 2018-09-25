@@ -14,19 +14,20 @@ brew "macvim"
 brew "mariadb"
 brew "mas"
 brew "nmap"
+brew "telnet"
 brew "wget"
 cask "flux"
 cask "google-chat"
 cask "google-chrome-canary"
 cask "iterm2"
 cask "microsoft-office"
-cask "microsoft-remote-desktop-beta"
 cask "postman"
 cask "spotify"
 cask "transmit"
 cask "vlc"
 cask "whatsapp"
 cask "x-lite"
+mas "Bandwidth+", id: 490461369
 mas "Reeder", id: 880001334
 mas "TweetDeck", id: 485812721
 mas "Xcode", id: 497799835
