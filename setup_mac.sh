@@ -22,6 +22,7 @@ brew install git
 echo "Git config"
 git config --global user.name "Fernando Flórez"
 git config --global user.email "fernando@funciton.com"
+git config --global core.excludesfile ~/projects/dotfiles/gitignore_global
 
 echo "Creating projects folder"
 mkdir ~/projects
