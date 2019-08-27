@@ -87,10 +87,12 @@ alias g='git'
 # Autocomplete g command too
 complete -o default -o nospace -F _git g
 
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+
 alias gs='git status'
 alias gss='git status -s'
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
-alias redis_start='redis-server /usr/local/etc/redis.conf'
 alias aws-get-instances='aws ec2 describe-instances --query "Reservations[].Instances[].[Tags[0].Value,State.Name,InstanceType,InstanceId,PrivateIpAddress,PublicDnsName,PublicIpAddress]" --output table'
 alias aws-get-images='aws ec2 describe-images --owner=self --query "Images[].[Name,ImageId,State,CreationDate]" --output table'
 alias gam="~/bin/gam/gam"
