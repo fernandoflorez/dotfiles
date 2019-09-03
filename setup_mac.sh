@@ -44,6 +44,7 @@ ln -s ~/projects/dotfiles/profile ~/.profile
 ln -s ~/.v/v/vimrc ~/.vimrc
 ln -s ~/projects/dotfiles/vimrc.after ~/.vimrc.after
 ln -s ~/projects/dotfiles/vimrc.before ~/.vimrc.before
+ln -s ~/projects/dotfiles/gpg-agent.conf ~ /.gnupg/gpg-agent.conf
 
 echo "Cleaning up brew"
 brew cleanup
@@ -78,9 +79,6 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
 # Setting the icon size of Dock items to 36 pixels for optimal size/screen-realestate
 defaults write com.apple.dock tilesize -int 36
-
-# Dock: position the Dock on the left
-defaults write com.apple.dock orientation left
 
 # Dock: position the Dock on the left
 defaults write com.apple.dock orientation left
