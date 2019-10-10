@@ -1,40 +1,55 @@
-# Added git auto-completion from brew installation
-if hash brew 2> /dev/null; then
-    source `brew --prefix git`/etc/bash_completion.d/git-completion.bash
-    # latest versions of git includes an extra file
-    __git_prompt_file=`brew --prefix git`/etc/bash_completion.d/git-prompt.sh
-else
-    __git_bash_completion=/etc/bash_completion.d/git
-    if [ ! -f "$__git_bash_completion" ]
-    then
-    	__git_bash_completion="${__git_bash_completion}-prompt"
-    fi
-    source $__git_bash_completion
-fi
-
-if [ -f "$__git_prompt_file" ]
+if hash brew 2> /dev/null
 then
-    source $__git_prompt_file
+    if [ -n "${BASH_VERSION:-}" ]
+    then
+        if [[ -r "`brew --prefix`/etc/profile.d/bash_completion.sh" ]]
+        then
+            source "`brew --prefix`/etc/profile.d/bash_completion.sh"
+        fi
+    elif [ -n "${ZSH_VERSION:-}" ]
+    then
+        FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+        autoload bashcompinit
+        bashcompinit
+        autoload -Uz compinit
+        compinit
+    fi
 fi
 
-
-# Reset
-Color_Off="\[\033[0m\]"       # Text Reset
-
-# High Intensty
-IBlack="\[\033[0;90m\]"       # Black
-IRed="\[\033[0;91m\]"         # Red
-IGreen="\[\033[0;92m\]"       # Green
-IYellow="\[\033[0;93m\]"      # Yellow
-
-# Various variables you might want for your PS1 prompt instead
-Time12h="\T"
-PathShort="\w"
+if [ -r `brew --prefix git`/etc/bash_completion.d/git-prompt.sh ]
+then
+    source `brew --prefix git`/etc/bash_completion.d/git-prompt.sh
+fi
 
 export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWSTASHSTATE=true
-export PS1="${IRed}$(hostname) ${IBlack}» ${Time12h}${Color_Off} \$(declare -F __git_ps1 &>/dev/null && __git_ps1 '(%s) ')${IYellow}${PathShort}${Color_Off} ${IGreen}\$${Color_Off} "
+
+if [ -n "${BASH_VERSION:-}" ]
+then
+
+    # Reset
+    Color_Off="\[\033[0m\]"       # Text Reset
+
+    # High Intensty
+    IBlack="\[\033[0;90m\]"       # Black
+    IRed="\[\033[0;91m\]"         # Red
+    IGreen="\[\033[0;92m\]"       # Green
+    IYellow="\[\033[0;93m\]"      # Yellow
+
+    # Various variables you might want for your PS1 prompt instead
+    Time12h="\T"
+    PathShort="\w"
+    export PS1="${IRed}$(hostname) ${IBlack}» ${Time12h}${Color_Off} \$(declare -F __git_ps1 &>/dev/null && __git_ps1 '(%s) ')${IYellow}${PathShort}${Color_Off} ${IGreen}\$${Color_Off} "
+
+elif [ -n "${ZSH_VERSION:-}" ]
+then
+
+    setopt PROMPT_SUBST
+    export PROMPT='%B%F{red}%m %F{black}» %F{yellow}%~%F{white}$(__git_ps1 " (%s)") \$%b%f '
+
+fi
+
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -55,40 +70,10 @@ function gpush() {
     git push $1 $([[ $2 ]] && echo $2 || echo $(current_branch))
 }
 
-function _hackon() {
-    local opts cur prev
-    opts=`ls -l $HOME/projects/ | egrep '^d' | awk '{print $NF}'`
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
-    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-    return 0
-}
-
-function hackon() {
-    if [[ "$VIRTUAL_ENV" != "" ]]; then
-        deactivate
-    fi
-    if [ -d "$HOME/projects/$1" ]; then
-        if [ -f "$HOME/projects/$1/bin/activate" ]; then
-            source "$HOME/projects/$1/bin/activate"
-        fi
-        if [ -d "$HOME/projects/$1/src" ]; then
-            cd "$HOME/projects/$1/src"
-        else
-            cd "$HOME/projects/$1"
-        fi
-    fi
-}
-complete -F _hackon hackon
-
 # Aliases
-alias activate='source bin/activate'
 alias g='git'
 # Autocomplete g command too
 complete -o default -o nospace -F _git g
-
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
 
 alias gs='git status'
 alias gss='git status -s'
@@ -97,3 +82,9 @@ alias aws-get-instances='aws ec2 describe-instances --query "Reservations[].Inst
 alias aws-get-images='aws ec2 describe-images --owner=self --query "Images[].[Name,ImageId,State,CreationDate]" --output table'
 alias gam="~/bin/gam/gam"
 alias mysql="mysql --prompt=mysql.local\>\ "
+
+
+# GPG Agent
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+

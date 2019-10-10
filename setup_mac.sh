@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # setup mac's name
-scutil --set ComputerName fernando
-scutil --set LocalHostName fernando
-scutil --set HostName fernando
+sudo scutil --set ComputerName fernando
+sudo scutil --set LocalHostName fernando
+sudo scutil --set HostName fernando
 
 echo "Installing x-code"
 xcode-select --install
@@ -30,20 +30,40 @@ mkdir ~/projects
 echo "Cloning dotfiles"
 mkdir ~/projects/dotfiles
 cd ~/projects/dotfiles
-git clone git@github.com:fernandoflorez/dotfiles.git .
+git clone https://github.com/fernandoflorez/dotfiles.git .
 
 echo "Installing Brewfile"
 brew bundle
+
+echo "Config cloudflared"
+mkdir -p /usr/local/etc/cloudflared
+cat << EOF > /usr/local/etc/cloudflared/config.yml
+proxy-dns: true
+proxy-dns-upstream:
+ - https://1.1.1.1/dns-query
+ - https://1.0.0.1/dns-query
+EOF
+networksetup -setdnsservers Wi-Fi 127.0.0.1
+
+echo "Installing GAM"
+bash <(curl -s -S -L https://git.io/install-gam)
 
 echo "Installing v"
 curl -fsSl https://raw.githubusercontent.com/fernandoflorez/v/master/setup.sh | bash
 
 echo "Creating dotfile links"
 ln -s ~/projects/dotfiles/bashrc ~/.bashrc
+ln -s ~/projects/dotfiles/zshrc ~/.zshrc
 ln -s ~/projects/dotfiles/profile ~/.profile
 ln -s ~/.v/v/vimrc ~/.vimrc
 ln -s ~/projects/dotfiles/vimrc.after ~/.vimrc.after
 ln -s ~/projects/dotfiles/vimrc.before ~/.vimrc.before
+
+echo "setup gnupg"
+mkdir ~/.gnupg
+chown -R $(whoami) ~/.gnupg/
+find ~/.gnupg -type f -exec chmod 600 {} \;
+find ~/.gnupg -type d -exec chmod 700 {} \;
 ln -s ~/projects/dotfiles/gpg-agent.conf ~ /.gnupg/gpg-agent.conf
 
 echo "Cleaning up brew"
