@@ -4,11 +4,12 @@
 if has('gui_running')
     " set font and font size
     " https://github.com/adobe-fonts/source-code-pro
-    set guifont=Source\ Code\ Pro:h10
+    set guifont=Source\ Code\ Pro:h12
 else
-    let g:solarized_termcolors=256
+    let g:hybrid_custom_term_colors = 1
+    let g:hybrid_reduced_contrast = 1
 endif
 
 " gui colors
 set background=dark
-colorscheme solarized
+colorscheme hybrid
