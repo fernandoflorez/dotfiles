@@ -9,10 +9,16 @@ then
     elif [ -n "${ZSH_VERSION:-}" ]
     then
         FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-        autoload bashcompinit
+
+        bindkey -v
+
+        autoload -Uz bashcompinit
         bashcompinit
+
         autoload -Uz compinit
         compinit
+
+        zstyle ':completion:*' special-dirs true
     fi
 fi
 
@@ -46,7 +52,7 @@ elif [ -n "${ZSH_VERSION:-}" ]
 then
 
     setopt PROMPT_SUBST
-    export PROMPT='%B%F{red}%m %F{black}» %F{yellow}%~%F{white}$(__git_ps1 " (%s)") \$%b%f '
+    export PROMPT='%B%F{red}%m %F{blue}» %F{yellow}%~%F{white} $(declare -F __git_ps1 &>/dev/null && __git_ps1 "(%s) ")\$%b%f '
 
 fi
 
@@ -85,6 +91,18 @@ alias mysql="mysql --prompt=mysql.local\>\ "
 
 
 # GPG Agent
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
+#export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+#gpgconf --launch gpg-agent
 
+AGENT_SOCK=$(gpgconf --list-dirs | grep agent-socket | cut -d : -f 2)
+
+if [[ ! -S $AGENT_SOCK ]]; then
+  gpg-agent --daemon --use-standard-socket &>/dev/null
+fi
+export GPG_TTY=$TTY
+
+GNUPGCONFIG="${GNUPGHOME:-"$HOME/.gnupg"}/gpg-agent.conf"
+if [[ -r $GNUPGCONFIG ]] && command grep -q enable-ssh-support "$GNUPGCONFIG"; then
+  export SSH_AUTH_SOCK="$AGENT_SOCK.ssh"
+  unset SSH_AGENT_PID
+fi
