@@ -64,7 +64,7 @@ mkdir ~/.gnupg
 chown -R $(whoami) ~/.gnupg/
 find ~/.gnupg -type f -exec chmod 600 {} \;
 find ~/.gnupg -type d -exec chmod 700 {} \;
-ln -s ~/projects/dotfiles/gpg-agent.conf ~ /.gnupg/gpg-agent.conf
+ln -s ~/projects/dotfiles/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
 echo "Cleaning up brew"
 brew cleanup
