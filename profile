@@ -10,8 +10,6 @@ then
     then
         FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
-        bindkey -v
-
         autoload -Uz bashcompinit
         bashcompinit
 
@@ -76,6 +74,13 @@ function gpush() {
     git push $1 $([[ $2 ]] && echo $2 || echo $(current_branch))
 }
 
+function change_gpg() {
+    for key in $(gpg-connect-agent 'keyinfo --list' /bye 2> /dev/null | grep -v OK | awk '{if ($4 == "T") { print $3 ".key" }}'); do
+        rm -v ~/.gnupg/private-keys-v1.d/$key
+    done
+    gpg --card-status 2> /dev/null 1> /dev/null
+}
+
 # Aliases
 alias g='git'
 # Autocomplete g command too
@@ -91,18 +96,7 @@ alias mysql="mysql --prompt=mysql.local\>\ "
 
 
 # GPG Agent
-#export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-#gpgconf --launch gpg-agent
-
-AGENT_SOCK=$(gpgconf --list-dirs | grep agent-socket | cut -d : -f 2)
-
-if [[ ! -S $AGENT_SOCK ]]; then
-  gpg-agent --daemon --use-standard-socket &>/dev/null
-fi
-export GPG_TTY=$TTY
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
 
 GNUPGCONFIG="${GNUPGHOME:-"$HOME/.gnupg"}/gpg-agent.conf"
-if [[ -r $GNUPGCONFIG ]] && command grep -q enable-ssh-support "$GNUPGCONFIG"; then
-  export SSH_AUTH_SOCK="$AGENT_SOCK.ssh"
-  unset SSH_AGENT_PID
-fi
