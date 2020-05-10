@@ -35,16 +35,6 @@ git clone https://github.com/fernandoflorez/dotfiles.git .
 echo "Installing Brewfile"
 brew bundle
 
-echo "Config cloudflared"
-mkdir -p /usr/local/etc/cloudflared
-cat << EOF > /usr/local/etc/cloudflared/config.yml
-proxy-dns: true
-proxy-dns-upstream:
- - https://1.1.1.1/dns-query
- - https://1.0.0.1/dns-query
-EOF
-networksetup -setdnsservers Wi-Fi 127.0.0.1
-
 echo "Installing GAM"
 bash <(curl -s -S -L https://git.io/install-gam)
 
@@ -65,6 +55,9 @@ chown -R $(whoami) ~/.gnupg/
 find ~/.gnupg -type f -exec chmod 600 {} \;
 find ~/.gnupg -type d -exec chmod 700 {} \;
 ln -s ~/projects/dotfiles/gpg-agent.conf ~/.gnupg/gpg-agent.conf
+
+echo "setup alacritty"
+ln -s ~/projects/dotfiles/alacritty.yml ~/.alacritty.yml
 
 echo "Cleaning up brew"
 brew cleanup

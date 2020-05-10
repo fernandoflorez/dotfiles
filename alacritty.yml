@@ -1,0 +1,63 @@
+window:
+    dimensions:
+        columns: 230
+        lines: 40
+    decorations: buttonless
+    padding:
+        x: 5
+        y: 5
+
+scrolling:
+    history: 10000
+    multiplier: 3
+
+font:
+    normal:
+        family: Source Code Pro
+        style: Regular
+    bold:
+        family: Source Code Pro
+        style: Bold
+    italic:
+        family: Source Code Pro
+        style: Italic
+    bold_italic:
+        family: Source Code Pro
+        style: Bold Italic
+    size: 12.0
+    use_thin_strokes: true
+
+cursor:
+    style: Block
+
+#shell:
+    #program: /bin/zsh
+
+# Colors (Hybrid)
+colors:
+  # Default colors
+  primary:
+    background: '#27292c'
+    foreground: '#d0d2d1'
+
+  # Normal colors
+  normal:
+    black:   '#35383b'
+    red:     '#b05655'
+    green:   '#769972'
+    yellow:  '#e1a574'
+    blue:    '#7693ac'
+    magenta: '#977ba0'
+    cyan:    '#749e99'
+    white:   '#848b92'
+
+  # Bright colors
+  bright:
+    black:   '#484c52'
+    red:     '#d27c7b'
+    green:   '#dffebe'
+    yellow:  '#f0d189'
+    blue:    '#96b1c9'
+    magenta: '#bfa5c7'
+    cyan:    '#9fc9c3'
+    white:   '#fcf7e2'
