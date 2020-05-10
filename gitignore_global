@@ -33,3 +33,4 @@ mutt/certificates
 fabric.yaml
 docs/_build
 Brewfile.lock.json
+.chalice
