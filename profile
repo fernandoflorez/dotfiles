@@ -86,7 +86,7 @@ alias g='git'
 # Autocomplete g command too
 complete -o default -o nospace -F _git g
 
-alias lg='ls -G'
+alias ls='ls -G'
 alias gs='git status'
 alias gss='git status -s'
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
