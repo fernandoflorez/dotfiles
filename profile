@@ -103,5 +103,7 @@ gpgconf --launch gpg-agent
 GNUPGCONFIG="${GNUPGHOME:-"$HOME/.gnupg"}/gpg-agent.conf"
 
 
-# BYOBU
-export BYOBU_PREFIX=/usr/local
+# auto-start tmux
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+    tmux attach -t default || tmux new -s default
+fi
