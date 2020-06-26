@@ -35,8 +35,8 @@ git clone https://github.com/fernandoflorez/dotfiles.git .
 echo "Installing Brewfile"
 brew bundle
 
-echo "Installing GAM"
-bash <(curl -s -S -L https://git.io/install-gam)
+#echo "Installing GAM"
+#bash <(curl -s -S -L https://git.io/install-gam)
 
 echo "Installing v"
 curl -fsSl https://raw.githubusercontent.com/fernandoflorez/v/master/setup.sh | bash
@@ -58,6 +58,10 @@ ln -s ~/projects/dotfiles/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
 echo "setup alacritty"
 ln -s ~/projects/dotfiles/alacritty.yml ~/.alacritty.yml
+
+echo "setup tmux"
+ln -s ~/projects/dotfiles/tmux.conf ~/.tmux.conf
+tmux
 
 echo "Cleaning up brew"
 brew cleanup
@@ -109,6 +113,9 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # Display 24 hour clock and date
 defaults write com.apple.menuextra.clock DateFormat -string "EEE MMM d  HH:mm"
+
+# set default screensaver
+defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName Fliqlo path /Users/fernando/Library/Screen\ Savers/Fliqlo.saver
 
 killall Finder
 killall Dock

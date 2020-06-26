@@ -1,15 +1,16 @@
 " customization for v:
 " https://github.com/fernandoflorez/v/
 
+" nerdcommenter customization
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDToggleCheckAllLines = 1
+
 if has('gui_running')
     " set font and font size
     " https://github.com/adobe-fonts/source-code-pro
     set guifont=Source\ Code\ Pro:h12
-else
-    let g:hybrid_custom_term_colors = 1
-    let g:hybrid_reduced_contrast = 1
+" else
 endif
 
-" gui colors
-set background=dark
-colorscheme hybrid
+colorscheme dracula
