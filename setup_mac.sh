@@ -31,6 +31,8 @@ echo "Cloning dotfiles"
 mkdir ~/projects/dotfiles
 cd ~/projects/dotfiles
 git clone https://github.com/fernandoflorez/dotfiles.git .
+git submodule init
+git submodule update
 
 echo "Installing Brewfile"
 brew bundle
@@ -58,6 +60,9 @@ ln -s ~/projects/dotfiles/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
 echo "setup alacritty"
 ln -s ~/projects/dotfiles/alacritty.yml ~/.alacritty.yml
+
+echo "use brew's zsh"
+dscl . -create /Users/$USER UserShell /usr/local/bin/zsh
 
 echo "setup tmux"
 ln -s ~/projects/dotfiles/tmux.conf ~/.tmux.conf
