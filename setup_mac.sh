@@ -23,6 +23,7 @@ echo "Git config"
 git config --global user.name "Fernando Flórez"
 git config --global user.email "fernando@funciton.com"
 git config --global core.excludesfile ~/projects/dotfiles/gitignore_global
+git config --global init.defaultBranch dev
 
 echo "Creating projects folder"
 mkdir ~/projects
