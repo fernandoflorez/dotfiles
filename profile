@@ -1,3 +1,9 @@
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export CFLAGS=-Qunused-arguments
+export CPPFLAGS=-Qunused-arguments
+
 if hash brew 2> /dev/null
 then
     if [ -n "${BASH_VERSION:-}" ]
@@ -54,12 +60,6 @@ then
 
 fi
 
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export CFLAGS=-Qunused-arguments
-export CPPFLAGS=-Qunused-arguments
-
 function current_branch() {
     local ref
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
@@ -92,8 +92,8 @@ alias gss='git status -s'
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
 alias aws-get-instances='aws ec2 describe-instances --query "Reservations[].Instances[].[Tags[0].Value,State.Name,InstanceType,InstanceId,PrivateIpAddress,PublicDnsName,PublicIpAddress]" --output table'
 alias aws-get-images='aws ec2 describe-images --owner=self --query "Images[].[Name,ImageId,State,CreationDate]" --output table'
-alias gam="~/bin/gam/gam"
 alias mysql="mysql --prompt=mysql.local\>\ "
+alias mvim="mvim -g"
 
 
 # GPG Agent
