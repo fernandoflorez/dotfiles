@@ -6,6 +6,9 @@ let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDToggleCheckAllLines = 1
 
+" display json quotes
+let g:vim_json_syntax_conceal = 0
+
 if has('gui_running')
     " set font and font size
     " https://github.com/adobe-fonts/source-code-pro
