@@ -1,4 +1,1 @@
-if [ -f "$HOME/.profile" ]
-then
-    . "$HOME/.profile"
-fi
+[ -f "$HOME/.profile" ] && [ -n "$PS1" ] && source $HOME/.profile;
