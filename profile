@@ -1,4 +1,4 @@
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/openjdk/bin:$PATH
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export CFLAGS=-Qunused-arguments
@@ -92,7 +92,7 @@ alias gss='git status -s'
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
 alias aws-get-instances='aws ec2 describe-instances --query "Reservations[].Instances[].[Tags[0].Value,State.Name,InstanceType,InstanceId,PrivateIpAddress,PublicDnsName,PublicIpAddress]" --output table'
 alias aws-get-images='aws ec2 describe-images --owner=self --query "Images[].[Name,ImageId,State,CreationDate]" --output table'
-alias mysql="mysql --prompt=mysql.local\>\ "
+alias mysql="mysql -h127.0.0.1 --prompt=mysql.local\>\ "
 alias mvim="mvim -g"
 
 
