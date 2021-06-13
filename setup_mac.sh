@@ -122,6 +122,9 @@ defaults write com.apple.menuextra.clock DateFormat -string "EEE MMM d  HH:mm"
 # set default screensaver
 defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName Fliqlo path /Users/fernando/Library/Screen\ Savers/Fliqlo.saver
 
+# fix compinit insecure files
+compaudit | xargs chmod g-w
+
 killall Finder
 killall Dock
 killall SystemUIServer
