@@ -1,4 +1,6 @@
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/openjdk/bin:$PATH
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH=$PYENV_ROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/openjdk/bin:/usr/local/opt/gnupg@2.2/bin:$PATH
+eval "$(pyenv init --path)"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export CFLAGS=-Qunused-arguments
@@ -80,6 +82,9 @@ function change_gpg() {
     done
     gpg --card-status 2> /dev/null 1> /dev/null
 }
+
+# pyenv init
+eval "$(pyenv init -)"
 
 # Aliases
 alias g='git'
