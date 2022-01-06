@@ -1,5 +1,7 @@
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH=$PYENV_ROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/openjdk/bin:/usr/local/opt/gnupg@2.2/bin:$PATH
+export PATH=$PYENV_ROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/gnupg@2.2/bin:$PATH
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_292`
+export ANDROID_SDK_ROOT=/usr/local/share/android-commandlinetools
 eval "$(pyenv init --path)"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -99,7 +101,6 @@ alias aws-get-instances='aws ec2 describe-instances --query "Reservations[].Inst
 alias aws-get-images='aws ec2 describe-images --owner=self --query "Images[].[Name,ImageId,State,CreationDate]" --output table'
 alias mysql="mysql -h127.0.0.1 --prompt=mysql.local\>\ "
 alias mvim="mvim -g"
-
 
 # GPG Agent
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
