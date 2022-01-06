@@ -71,6 +71,9 @@ tmux
 echo "Cleaning up brew"
 brew cleanup
 
+echo "Setup certbot cloudflare plugin"
+$(brew --prefix certbot)/libexec/bin/pip3 install certbot-dns-cloudflare
+
 echo "Mac OS customization"
 
 # Show battery percentage
