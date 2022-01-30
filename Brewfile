@@ -31,7 +31,7 @@ brew "jq"
 brew "lsusb"
 brew "mas"
 brew "mosh"
-brew "mysql", restart_service: true
+brew "mysql"
 brew "nmap"
 brew "node@14"
 brew "pinentry-mac"
