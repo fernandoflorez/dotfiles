@@ -16,18 +16,18 @@ scrolling:
     multiplier: 3
 
 font:
-    # normal:
-    #     family: Source Code Pro
-    #     style: Regular
-    # bold:
-    #     family: Source Code Pro
-    #     style: Bold
-    # italic:
-    #     family: Source Code Pro
-    #     style: Italic
-    # bold_italic:
-    #     family: Source Code Pro
-    #     style: Bold Italic
+    normal:
+        family: Source Code Pro
+        style: Regular
+    bold:
+        family: Source Code Pro
+        style: Bold
+    italic:
+        family: Source Code Pro
+        style: Italic
+    bold_italic:
+        family: Source Code Pro
+        style: Bold Italic
     size: 12.0
     use_thin_strokes: true
 
