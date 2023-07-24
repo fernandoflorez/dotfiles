@@ -1,5 +1,5 @@
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH=$PYENV_ROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/gnupg@2.2/bin:$PATH
+export PATH=$PYENV_ROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/gnupg@2.2/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_292`
 export ANDROID_SDK_ROOT=/usr/local/share/android-commandlinetools
 eval "$(pyenv init --path)"
