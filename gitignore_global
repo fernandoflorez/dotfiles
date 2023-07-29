@@ -34,4 +34,3 @@ fabric.yaml
 docs/_build
 Brewfile.lock.json
 .chalice
-Pipfile.lock
