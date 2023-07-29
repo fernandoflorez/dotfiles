@@ -17,7 +17,6 @@ bin-debug
 .classpath
 .springBeans
 **/*/target/*
-local_settings.py
 *.class
 *.swp
 .netrwhist
@@ -33,4 +32,3 @@ mutt/certificates
 fabric.yaml
 docs/_build
 Brewfile.lock.json
-.chalice
