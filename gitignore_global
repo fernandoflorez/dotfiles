@@ -3,7 +3,6 @@
 **/build/*
 *.sw[fc]
 .svn
-.gitignore
 assets/*
 *.ipa
 *.log
