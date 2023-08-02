@@ -45,7 +45,7 @@ echo "Installing v"
 curl -fsSl https://raw.githubusercontent.com/fernandoflorez/v/master/setup.sh | bash
 
 echo "Creating dotfile links"
-ln -s ~/projects/dotfiles/bashrc ~/.bashrc
+ln -s ~/projects/dotfiles/bashrc ~/.bash_profile
 ln -s ~/projects/dotfiles/zshrc ~/.zshrc
 ln -s ~/projects/dotfiles/profile ~/.profile
 ln -s ~/projects/dotfiles/vimrc.after ~/.vimrc.after
