@@ -71,4 +71,3 @@ cask "transmit"
 cask "whatsapp-alpha"
 mas "au.id.haroldchu.mac.Bandwidth", id: 490461369
 mas "Reeder", id: 880001334
-mas "Xcode", id: 497799835
