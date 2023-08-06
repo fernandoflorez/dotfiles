@@ -121,6 +121,12 @@ defaults write com.apple.dock tilesize -int 23
 # Dock: position the Dock on the left
 defaults write com.apple.dock orientation left
 
+# Dock: Only have appstore and system preferences on dock
+defaults write com.apple.dock persistent-apps -array
+for item in /System/Applications/{"App Store","System Settings"}.app; do
+    defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>'$item'</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
+done
+
 # Finder: empty Trash securely by default
 defaults write com.apple.finder EmptyTrashSecurely -bool true
 
