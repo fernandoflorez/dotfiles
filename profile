@@ -98,11 +98,10 @@ alias ls='ls -G'
 alias gs='git status'
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
 alias aws-get-instances='aws ec2 describe-instances --query "Reservations[].Instances[].[Tags[0].Value,State.Name,InstanceType,InstanceId,PrivateIpAddress,PublicDnsName,PublicIpAddress]" --output table'
-alias aws-get-images='aws ec2 describe-images --owner=self --query "Images[].[Name,ImageId,State,CreationDate]" --output table'
 alias aws-get-repositories='aws codecommit list-repositories --query "repositories[].repositoryName" --output table'
 alias mysql="mysql -uroot -h127.0.0.1 --prompt=mysql.local\>\ "
 alias mvim="mvim -g"
-alias cat="bat"
+alias cat="bat --theme=OneHalfDark"
 
 # GPG Agent
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
