@@ -62,11 +62,14 @@ echo "setup alacritty"
 ln -s ~/projects/dotfiles/alacritty.yml ~/.alacritty.yml
 
 echo "use brew's zsh"
-dscl . -create /Users/$USER UserShell /usr/local/bin/zsh
+sudo sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells'
+chsh -s /usr/local/bin/zsh
 
 echo "setup tmux"
 ln -s ~/projects/dotfiles/tmux.conf ~/.tmux.conf
-tmux
+if ! { [ -n "$TMUX" ]; } then
+    tmux
+fi
 
 echo "Cleaning up brew"
 brew cleanup
@@ -76,11 +79,21 @@ $(brew --prefix certbot)/libexec/bin/pip3 install certbot-dns-cloudflare
 
 echo "Mac OS customization"
 
+# speedy wake up to 24 hours
+sudo pmset -a standbydelay 86400
+
 # Show battery percentage
-defaults write com.apple.menuextra.battery ShowPercent YES
+defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -int 1
+
+# Display bluetooth icon on menubar
+defaults -currentHost write com.apple.controlcenter Bluetooth -int 2
 
 # Disabling system-wide resume
 defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
+
+# Right click on two finger tap
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool true
 
 # Disabling OS X Gate Keeper
 # (You'll be able to install any app you want from here on, not just Mac App Store apps)
@@ -102,8 +115,8 @@ defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 # Avoiding the creation of .DS_Store files on network volumes
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
-# Setting the icon size of Dock items to 36 pixels for optimal size/screen-realestate
-defaults write com.apple.dock tilesize -int 36
+# Setting the icon size of Dock items to 23 pixels for optimal size/screen-realestate
+defaults write com.apple.dock tilesize -int 23
 
 # Dock: position the Dock on the left
 defaults write com.apple.dock orientation left
@@ -111,13 +124,14 @@ defaults write com.apple.dock orientation left
 # Finder: empty Trash securely by default
 defaults write com.apple.finder EmptyTrashSecurely -bool true
 
-# Dark menu bar and dock
-defaults write $HOME/Library/Preferences/.GlobalPreferences.plist AppleInterfaceTheme -string "Dark"
-
 # Enable trackpad tap to click
 defaults write com.apple.AppleBluetoothMultitouchTrackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Set mouse and trackpad speed
+defaults write -g com.apple.trackpad.scaling 3
+defaults write -g com.apple.mouse.scaling 3
 
 # Display 24 hour clock and date
 defaults write com.apple.menuextra.clock DateFormat -string "EEE MMM d  HH:mm"
@@ -125,8 +139,8 @@ defaults write com.apple.menuextra.clock DateFormat -string "EEE MMM d  HH:mm"
 # set default screensaver
 defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName Fliqlo path /Users/fernando/Library/Screen\ Savers/Fliqlo.saver
 
-# fix compinit insecure files
-compaudit | xargs chmod g-w
+# Prevent Time Machine from prompting to use new hard drive as backup volume
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 killall Finder
 killall Dock
