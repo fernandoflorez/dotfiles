@@ -74,6 +74,11 @@ fi
 echo "Cleaning up brew"
 brew cleanup
 
+# Setup tailscale
+go install tailscale.com/cmd/tailscale{,d}@main
+sudo $HOME/go/bin/tailscaled install-system-daemon
+tailscale login --accept-dns --accept-routes
+
 echo "Setup certbot cloudflare plugin"
 $(brew --prefix certbot)/libexec/bin/pip3 install certbot-dns-cloudflare
 
