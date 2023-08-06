@@ -1,13 +1,10 @@
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH=$PYENV_ROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/local/opt/gnupg@2.2/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$HOME/go/bin:$PATH
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_292`
-export ANDROID_SDK_ROOT=/usr/local/share/android-commandlinetools
+export PATH=$PYENV_ROOT/bin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:$HOME/go/bin:$PATH
 eval "$(pyenv init --path)"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
-export BAT_THEME=OneHalf
 
 if hash brew 2> /dev/null
 then

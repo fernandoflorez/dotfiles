@@ -50,8 +50,6 @@ brew "zsh"
 brew "skeema/tap/skeema"
 cask "adobe-creative-cloud"
 cask "alacritty"
-cask "android-commandlinetools"
-cask "android-studio"
 cask "authy"
 cask "balenaetcher"
 cask "dynobase"
@@ -70,12 +68,7 @@ cask "slack"
 cask "spotify"
 cask "temurin"
 cask "transmit"
-cask "whatsapp"
+cask "whatsapp-alpha"
 mas "au.id.haroldchu.mac.Bandwidth", id: 490461369
-mas "JSONPeep", id: 1458969831
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
 mas "Reeder", id: 880001334
-mas "WireGuard", id: 1451685025
 mas "Xcode", id: 497799835
