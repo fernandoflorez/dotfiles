@@ -1,10 +1,13 @@
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH=$PYENV_ROOT/bin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:$HOME/go/bin:$PATH
+export PATH=$PYENV_ROOT/bin:/usr/local/bin:/usr/local/sbin:$HOME/go/bin:$PATH
 eval "$(pyenv init --path)"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
+
+# init brew shell env
+eval $(/opt/homebrew/bin/brew shellenv)
 
 if hash brew 2> /dev/null
 then
