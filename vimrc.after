@@ -21,4 +21,5 @@ if has('gui_running')
 " else
 endif
 
-silent! colorscheme dracula
+silent! colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
