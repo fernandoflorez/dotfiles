@@ -61,9 +61,9 @@ ln -s ~/projects/dotfiles/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 echo "setup alacritty"
 ln -s ~/projects/dotfiles/alacritty.yml ~/.alacritty.yml
 
-echo "use brew's zsh"
-sudo sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells'
-chsh -s /usr/local/bin/zsh
+# echo "use brew's zsh"
+# sudo sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells'
+# chsh -s /usr/local/bin/zsh
 
 echo "setup tmux"
 ln -s ~/projects/dotfiles/tmux.conf ~/.tmux.conf
