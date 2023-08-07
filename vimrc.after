@@ -17,8 +17,7 @@ set relativenumber
 
 if has('gui_running')
     " set font and font size
-    " https://github.com/adobe-fonts/source-code-pro
-    set guifont=Source\ Code\ Pro:h12
+    set guifont=Hack:h12
 " else
 endif
 
