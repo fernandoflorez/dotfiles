@@ -75,12 +75,14 @@ echo "Cleaning up brew"
 brew cleanup
 
 # Setup tailscale
-go install tailscale.com/cmd/tailscale{,d}@main
-sudo $HOME/go/bin/tailscaled install-system-daemon
-tailscale login --accept-dns --accept-routes
+echo "installing tailscale"
+if ! [ -n tailscale ]; then
+    go install tailscale.com/cmd/tailscale{,d}@main
+    sudo $HOME/go/bin/tailscaled install-system-daemon
+fi
 
 echo "Setup certbot cloudflare plugin"
-$(brew --prefix certbot)/libexec/bin/pip3 install certbot-dns-cloudflare
+$(brew --prefix certbot)/libexec/bin/python -m pip install certbot-dns-cloudflare
 
 echo "Mac OS customization"
 
@@ -129,7 +131,7 @@ defaults write com.apple.dock orientation left
 # Dock: Only have appstore and system preferences on dock
 defaults write com.apple.dock persistent-apps -array
 for item in /System/Applications/{"App Store","System Settings"}.app; do
-    defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>'$item'</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
+    defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$item</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
 done
 
 # Finder: empty Trash securely by default
