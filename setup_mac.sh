@@ -48,8 +48,6 @@ echo "Creating dotfile links"
 ln -s ~/projects/dotfiles/bashrc ~/.bash_profile
 ln -s ~/projects/dotfiles/zshrc ~/.zshrc
 ln -s ~/projects/dotfiles/profile ~/.profile
-ln -s ~/projects/dotfiles/vimrc.after ~/.vimrc.after
-ln -s ~/projects/dotfiles/vimrc.before ~/.vimrc.before
 
 echo "setup gnupg"
 mkdir ~/.gnupg

@@ -1,3 +1,0 @@
-" change map leader
-let mapleader = ","
-let g:mapleader = ","
