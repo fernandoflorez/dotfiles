@@ -19,24 +19,23 @@ brew update
 echo "Installing Git"
 brew install git
 
+echo "Creating projects folder"
+mkdir ~/projects
+
+echo "Cloning dotfiles"
+git clone https://github.com/fernandoflorez/dotfiles.git ~/.config
+cd ~/.config
+git submodule init
+git submodule update
+
 echo "Git config"
 git config --global user.name "Fernando Flórez"
 git config --global user.email "fernando@funciton.com"
 git config --global core.excludesfile ~/projects/dotfiles/gitignore_global
 git config --global init.defaultBranch dev
 
-echo "Creating projects folder"
-mkdir ~/projects
-
-echo "Cloning dotfiles"
-mkdir ~/projects/dotfiles
-cd ~/projects/dotfiles
-git clone https://github.com/fernandoflorez/dotfiles.git .
-git submodule init
-git submodule update
-
 echo "Installing Brewfile"
-brew bundle
+cd; brew bundle --file ~/.config/Brewfile
 
 #echo "Installing GAM"
 #bash <(curl -s -S -L https://git.io/install-gam)
@@ -45,26 +44,16 @@ echo "Installing v"
 curl -fsSl https://raw.githubusercontent.com/fernandoflorez/v/master/setup.sh | bash
 
 echo "Creating dotfile links"
-ln -s ~/projects/dotfiles/bashrc ~/.bash_profile
-ln -s ~/projects/dotfiles/zshrc ~/.zshrc
-ln -s ~/projects/dotfiles/profile ~/.profile
+ln -s ~/.config/bashrc ~/.bash_profile
+ln -s ~/.config/zshrc ~/.zshrc
+ln -s ~/.config/profile ~/.profile
 
 echo "setup gnupg"
-mkdir ~/.gnupg
-chown -R $(whoami) ~/.gnupg/
-find ~/.gnupg -type f -exec chmod 600 {} \;
-find ~/.gnupg -type d -exec chmod 700 {} \;
-ln -s ~/projects/dotfiles/gpg-agent.conf ~/.gnupg/gpg-agent.conf
+chown -R $(whoami) ~/.config/gnupg/
+find ~/.config/gnupg -type f -exec chmod 600 {} \;
+find ~/.config/gnupg -type d -exec chmod 700 {} \;
 
-echo "setup alacritty"
-ln -s ~/projects/dotfiles/alacritty.yml ~/.alacritty.yml
-
-# echo "use brew's zsh"
-# sudo sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells'
-# chsh -s /usr/local/bin/zsh
-
-echo "setup tmux"
-ln -s ~/projects/dotfiles/tmux.conf ~/.tmux.conf
+echo "starting tmux"
 if ! { [ -n "$TMUX" ]; } then
     tmux
 fi

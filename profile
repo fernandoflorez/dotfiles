@@ -1,6 +1,5 @@
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH=$PYENV_ROOT/bin:/usr/local/bin:/usr/local/sbin:$HOME/go/bin:$PATH
-eval "$(pyenv init --path)"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export CFLAGS=-Qunused-arguments
@@ -107,7 +106,7 @@ alias cat="bat --theme=OneHalfDark"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 
-GNUPGCONFIG="${GNUPGHOME:-"$HOME/.gnupg"}/gpg-agent.conf"
+GNUPGCONFIG="${GNUPGHOME:-"$HOME/.config/gnupg"}/gpg-agent.conf"
 
 
 # auto-start tmux
