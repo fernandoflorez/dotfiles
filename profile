@@ -4,6 +4,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
+export GNUPGHOME=$HOME/.config/gnupg
 
 # init brew shell env
 eval $(/opt/homebrew/bin/brew shellenv)
@@ -80,7 +81,7 @@ function gpush() {
 
 function change_gpg() {
     for key in $(gpg-connect-agent 'keyinfo --list' /bye 2> /dev/null | grep -v OK | awk '{if ($4 == "T") { print $3 ".key" }}'); do
-        rm -v ~/.gnupg/private-keys-v1.d/$key
+        rm -v ~/.config/gnupg/private-keys-v1.d/$key
     done
     gpg --card-status 2> /dev/null 1> /dev/null
 }
