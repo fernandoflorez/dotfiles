@@ -6,7 +6,14 @@ export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
 
 # init brew shell env
-eval $(/opt/homebrew/bin/brew shellenv)
+if [[ "$(/usr/bin/uname -m)" == "arm64" ]]
+then
+    HOMEBREW_PREFIX="/opt/homebrew"
+else
+    HOMEBREW_PREFIX="/usr/local"
+fi
+
+eval $(${HOMEBREW_PREFIX}/bin/brew shellenv)
 
 if hash brew 2> /dev/null
 then
