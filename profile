@@ -109,6 +109,7 @@ alias aws-get-repositories='aws codecommit list-repositories --query "repositori
 alias mysql="mysql -uroot -h127.0.0.1 --prompt=mysql.local\>\ "
 alias mvim="mvim -g"
 alias cat="bat --theme=OneHalfDark"
+alias docker='podman'
 
 # GPG Agent
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
