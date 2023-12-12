@@ -5,6 +5,7 @@ export LANG=en_US.UTF-8
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
 export GNUPGHOME=$HOME/.config/gnupg
+export EDITOR="nvim"
 
 # init brew shell env
 if [[ "$(/usr/bin/uname -m)" == "arm64" ]]
@@ -110,6 +111,7 @@ alias mysql="mysql -uroot -h127.0.0.1 --prompt=mysql.local\>\ "
 alias mvim="mvim -g"
 alias cat="bat --theme=OneHalfDark"
 alias docker='podman'
+alias mux='tmuxinator'
 
 # GPG Agent
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -119,6 +121,6 @@ GNUPGCONFIG="${GNUPGHOME:-"$HOME/.config/gnupg"}/gpg-agent.conf"
 
 
 # auto-start tmux
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-    tmux attach -t default || tmux new -s default
-fi
+# if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+#     tmux attach -t default || tmux new -s default
+# fi
