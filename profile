@@ -112,6 +112,7 @@ alias mysql="mysql -uroot -h127.0.0.1 --prompt=mysql.local\>\ "
 alias mvim="mvim -g"
 alias cat="bat --theme=OneHalfDark"
 alias docker='podman'
+alias vi='nvim'
 
 function _hackon() {
     local opts cur prev
