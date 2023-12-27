@@ -6,6 +6,7 @@ export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
 export GNUPGHOME=$HOME/.config/gnupg
 export EDITOR="nvim"
+export PROJECTS_DIR=$HOME/projects/
 
 # init brew shell env
 if [[ "$(/usr/bin/uname -m)" == "arm64" ]]
@@ -111,7 +112,25 @@ alias mysql="mysql -uroot -h127.0.0.1 --prompt=mysql.local\>\ "
 alias mvim="mvim -g"
 alias cat="bat --theme=OneHalfDark"
 alias docker='podman'
-alias mux='tmuxinator'
+
+function _hackon() {
+    local opts cur prev
+    opts=`fd --exact-depth 1 --type d . $PROJECTS_DIR --exec basename {} \; | sort --ignore-case`
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    return 0
+}
+
+function hackon() {
+    if [ -f "$HOME/.config/tmuxinator/$1.yml" ]; then
+        tmuxinator start $1
+    fi
+    if [ -d "$PROJECTS_DIR/$1" ]; then
+        tmuxinator start workon $1
+    fi
+}
+complete -F _hackon hackon
 
 # GPG Agent
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
