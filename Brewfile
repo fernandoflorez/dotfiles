@@ -1,10 +1,10 @@
 tap "aws/tap"
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/services"
 tap "skeema/tap"
+brew "openssl@3"
 brew "aws-shell"
 brew "awscli"
 brew "awslogs"
@@ -73,7 +73,7 @@ cask "spotify"
 cask "temurin"
 cask "transmit"
 cask "whatsapp-beta"
-mas "au.id.haroldchu.mac.Bandwidth", id: 490461369
+mas "Bandwidth+", id: 490461369
 mas "Brother iPrint&Scan", id: 1193539993
 mas "Reeder", id: 880001334
 mas "Tailscale", id: 1475387142
