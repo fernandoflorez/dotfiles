@@ -41,6 +41,11 @@ then
     source `brew --prefix zsh-autosuggestions`/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
+if [ -r `brew --prefix zsh-syntax-highlighting`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]
+then
+    source `brew --prefix zsh-syntax-highlighting`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
 export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWSTASHSTATE=true
@@ -79,7 +84,7 @@ eval "$(pyenv init -)"
 
 # Aliases
 alias g='git'
-# Autocomplete g command too
+# Autocomplete g command
 complete -o default -o nospace -F _git g
 
 alias ls='ls -G'
