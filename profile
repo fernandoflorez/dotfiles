@@ -20,18 +20,9 @@ eval $(${HOMEBREW_PREFIX}/bin/brew shellenv)
 
 if hash brew 2> /dev/null
 then
-    if [ -n "${BASH_VERSION:-}" ]
-    then
-        if [[ -r "`brew --prefix`/etc/profile.d/bash_completion.sh" ]]
-        then
-            source "`brew --prefix`/etc/profile.d/bash_completion.sh"
-        fi
-    elif [ -n "${ZSH_VERSION:-}" ]
+    if [ -n "${ZSH_VERSION:-}" ]
     then
         FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-
-        autoload -Uz bashcompinit
-        bashcompinit
 
         autoload -Uz compinit
         compinit
@@ -49,24 +40,7 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWSTASHSTATE=true
 
-if [ -n "${BASH_VERSION:-}" ]
-then
-
-    # Reset
-    Color_Off="\[\033[0m\]"       # Text Reset
-
-    # High Intensty
-    IBlack="\[\033[0;90m\]"       # Black
-    IRed="\[\033[0;91m\]"         # Red
-    IGreen="\[\033[0;92m\]"       # Green
-    IYellow="\[\033[0;93m\]"      # Yellow
-
-    # Various variables you might want for your PS1 prompt instead
-    Time12h="\T"
-    PathShort="\w"
-    export PS1="${IRed}$(hostname) ${IBlack}» ${Time12h}${Color_Off} \$(declare -F __git_ps1 &>/dev/null && __git_ps1 '(%s) ')${IYellow}${PathShort}${Color_Off} ${IGreen}\$${Color_Off} "
-
-elif [ -n "${ZSH_VERSION:-}" ]
+if [ -n "${ZSH_VERSION:-}" ]
 then
 
     setopt PROMPT_SUBST
