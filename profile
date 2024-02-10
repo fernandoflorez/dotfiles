@@ -24,8 +24,8 @@ then
     then
         FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
-        autoload -Uz compinit
-        compinit
+        autoload -U +X bashcompinit && bashcompinit
+        autoload -U +X compinit && compinit
 
         zstyle ':completion:*' special-dirs true
     fi
@@ -34,6 +34,11 @@ fi
 if [ -r `brew --prefix git`/etc/bash_completion.d/git-prompt.sh ]
 then
     source `brew --prefix git`/etc/bash_completion.d/git-prompt.sh
+fi
+
+if [ -r `brew --prefix zsh-autosuggestions`/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]
+then
+    source `brew --prefix zsh-autosuggestions`/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
 export GIT_PS1_SHOWDIRTYSTATE=true
