@@ -114,25 +114,6 @@ alias cat="bat --theme=OneHalfDark"
 alias docker='podman'
 alias vi='nvim'
 
-function _hackon() {
-    local opts cur prev
-    opts=`fd --exact-depth 1 --type d . $PROJECTS_DIR --exec basename {} \; | sort --ignore-case`
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
-    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-    return 0
-}
-
-function hackon() {
-    if [ -f "$HOME/.config/tmuxinator/$1.yml" ]; then
-        tmuxinator start $1
-    fi
-    if [ -d "$PROJECTS_DIR/$1" ]; then
-        tmuxinator start workon $1
-    fi
-}
-complete -F _hackon hackon
-
 # GPG Agent
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
@@ -141,6 +122,6 @@ GNUPGCONFIG="${GNUPGHOME:-"$HOME/.config/gnupg"}/gpg-agent.conf"
 
 
 # auto-start tmux
-# if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-#     tmux attach -t default || tmux new -s default
-# fi
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+    tmux attach -t default || tmux new -s default
+fi
