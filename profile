@@ -18,6 +18,10 @@ fi
 
 eval $(${HOMEBREW_PREFIX}/bin/brew shellenv)
 
+if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
+fi
+
 if hash brew 2> /dev/null
 then
     if [ -n "${ZSH_VERSION:-}" ]
@@ -44,6 +48,11 @@ fi
 if [ -r `brew --prefix zsh-syntax-highlighting`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]
 then
     source `brew --prefix zsh-syntax-highlighting`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+if [ -r `brew --prefix`/shell/competion.zsh ]
+then
+    source `brew --prefix fzf`/shell/completion.zsh
 fi
 
 export GIT_PS1_SHOWDIRTYSTATE=true
