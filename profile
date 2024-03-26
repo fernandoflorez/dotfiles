@@ -106,6 +106,7 @@ alias mvim="mvim -g"
 alias cat="bat --theme=OneHalfDark"
 alias docker='podman'
 alias vi='nvim'
+alias ls='eza --icons auto --group-directories-first'
 
 # GPG Agent
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
