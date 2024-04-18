@@ -33,6 +33,12 @@ git config --global user.name "Fernando Flórez"
 git config --global user.email "fernando@funciton.com"
 git config --global core.excludesfile ~/projects/dotfiles/gitignore_global
 git config --global init.defaultBranch dev
+git config --global core.pager delta
+git config --global interactive.diffFilter delta --color-only
+git config --global delta.navigate true
+git config --global delta.side-by-side true
+git config --global merge.conflictStyle diff3
+git config --global diff.colorMoved default
 
 echo "Installing Brewfile"
 cd; brew bundle --file ~/.config/Brewfile

@@ -50,9 +50,24 @@ then
     source `brew --prefix zsh-syntax-highlighting`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-if [ -r `brew --prefix`/shell/competion.zsh ]
+if [ -r `brew --prefix fzf`/shell/completion.zsh ]
 then
     source `brew --prefix fzf`/shell/completion.zsh
+    eval "$(fzf --zsh)"
+fi
+
+if hash fd 2> /dev/null
+then
+    export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+    _fzf_compgen_path() {
+      fd --hidden --exclude .git . "$1"
+    }
+
+    _fzf_compgen_dir() {
+      fd --type=d --hidden --exclude .git . "$1"
+    }
 fi
 
 export GIT_PS1_SHOWDIRTYSTATE=true
@@ -87,9 +102,6 @@ function change_gpg() {
     done
     gpg --card-status 2> /dev/null 1> /dev/null
 }
-
-# pyenv init
-eval "$(pyenv init -)"
 
 # Aliases
 alias g='git'
