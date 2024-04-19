@@ -99,50 +99,50 @@ style = "Italic"
 family = "Hack Nerd Font"
 style = "Regular"
 
-[[keyboard.bindings]]
-chars = '\'
-key = 10
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "|"
-key = 18
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "@"
-key = "Key2"
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "#"
-key = "Key3"
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "¬"
-key = "Key6"
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "{"
-key = 39
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "}"
-key = 42
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "["
-key = 33
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "]"
-key = 30
-mods = "Alt"
+# [[keyboard.bindings]]
+# chars = '\'
+# key = 10
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "|"
+# key = 18
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "@"
+# key = "Key2"
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "#"
+# key = "Key3"
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "¬"
+# key = "Key6"
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "{"
+# key = 39
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "}"
+# key = 42
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "["
+# key = 33
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "]"
+# key = 30
+# mods = "Alt"
 
 [scrolling]
 history = 10000
