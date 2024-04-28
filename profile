@@ -56,6 +56,11 @@ then
     eval "$(fzf --zsh)"
 fi
 
+if [ -r `brew --prefix z`/etc/profile.d/z.sh ]
+then
+    source `brew --prefix z`/etc/profile.d/z.sh
+fi
+
 if hash fd 2> /dev/null
 then
     export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
