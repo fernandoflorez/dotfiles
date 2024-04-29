@@ -121,12 +121,15 @@ alias cat="bat --theme=OneHalfDark"
 alias docker='podman'
 alias vi='nvim'
 alias ls='eza --icons auto --group-directories-first'
+alias hackon='cd $PROJECTS_DIR/`find $PROJECTS_DIR/ -type d -mindepth 1 -maxdepth 1 -exec basename {} \; | sort -Vk1 --ignore-case | fzf`'
 
 # GPG Agent
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 
 GNUPGCONFIG="${GNUPGHOME:-"$HOME/.config/gnupg"}/gpg-agent.conf"
+
+bindkey -s ^f "hackon"
 
 
 # auto-start tmux
