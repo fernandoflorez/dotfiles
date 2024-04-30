@@ -87,18 +87,18 @@ then
 
 fi
 
-function current_branch() {
+function _current_git_branch() {
     local ref
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
     echo ${ref#refs/heads/}
 }
 
 function gpull() {
-    git pull $1 $([[ $2 ]] && echo $2 || echo $(current_branch))
+    git pull $1 $([[ $2 ]] && echo $2 || echo $(_current_git_branch))
 }
 
 function gpush() {
-    git push $1 $([[ $2 ]] && echo $2 || echo $(current_branch))
+    git push $1 $([[ $2 ]] && echo $2 || echo $(_current_git_branch))
 }
 
 function change_gpg() {
@@ -115,13 +115,11 @@ complete -o default -o nospace -F _git g
 
 alias gs='git status'
 alias aws-get-instances='aws ec2 describe-instances --query "Reservations[].Instances[].[Tags[0].Value,State.Name,InstanceType,InstanceId,PrivateIpAddress,PublicDnsName,PublicIpAddress]" --output table'
-alias aws-get-repositories='aws codecommit list-repositories --query "repositories[].repositoryName" --output table'
 alias mysql="mysql -uroot -h127.0.0.1 --prompt=mysql.local\>\ "
 alias cat="bat --theme=OneHalfDark"
 alias docker='podman'
 alias vi='nvim'
 alias ls='eza --icons auto --group-directories-first'
-alias hackon='cd $PROJECTS_DIR/`find $PROJECTS_DIR/ -type d -mindepth 1 -maxdepth 1 -exec basename {} \; | sort -Vk1 --ignore-case | fzf`'
 
 # GPG Agent
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -129,8 +127,40 @@ gpgconf --launch gpg-agent
 
 GNUPGCONFIG="${GNUPGHOME:-"$HOME/.config/gnupg"}/gpg-agent.conf"
 
-bindkey -s ^f "hackon"
+# hackon
+function _hackon() {
+    local project=`find $PROJECTS_DIR -type d -mindepth 1 -maxdepth 1 -exec basename {} \; | sort -Vk1 --ignore-case | fzf --layout reverse --prompt="hackon~ "`
+    if [ -n "$project" ]; then
+        BUFFER="cd $PROJECTS_DIR$project"
+        zle accept-line
+    fi
+    zle reset-prompt
+}
+zle -N _hackon
+bindkey "^f" _hackon
 
+# aws
+function _set_aws_profile() {
+    local profile=`aws --no-cli-pager configure list-profiles | fzf --layout reverse --prompt="aws profile~ "`
+    if [ -n "$profile" ]; then
+        export AWS_DEFAULT_PROFILE=$profile
+        export AWS_PROFILE=$profile
+        export AWS_PROFILE_REGION=$(aws configure get region)
+        export RPROMPT="%b%F{blue}$AWS_PROFILE %F{red}($AWS_PROFILE_REGION)%f"
+        zle accept-line
+    fi
+    zle reset-prompt
+}
+zle -N _set_aws_profile
+
+function _unset_aws_profile() {
+    unset AWS_DEFAULT_PROFILE AWS_PROFILE AWS_PROFILE_REGION RPROMPT
+    zle accept-line
+    zle reset-prompt
+}
+zle -N _unset_aws_profile
+bindkey "^p" _set_aws_profile
+bindkey "^o" _unset_aws_profile
 
 # auto-start tmux
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
