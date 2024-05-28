@@ -23,4 +23,4 @@ multiplier = 3
 decorations = "Full"
 opacity = 1.0
 startup_mode = "Maximized"
-padding = { x = 5, y = 5}
+dynamic_padding = true
