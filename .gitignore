@@ -1,5 +1,6 @@
-gnupg/reader_0.status
-gnupg/sshcontrol
-gnupg/private-keys-v1.d/*
-tmux/plugins/*
-tmux/tpm/*
+gnupg/.config/gnupg/reader_0.status
+gnupg/.config/gnupg/sshcontrol
+gnupg/.config/gnupg/private-keys-v1.d/*
+tmux/.config/tmux/plugins/*
+tmux/.config/tmux/tpm/*
+tmux/.config/tmux/plugins/*
