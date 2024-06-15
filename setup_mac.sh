@@ -23,38 +23,20 @@ echo "Creating projects folder"
 mkdir ~/projects
 
 echo "Cloning dotfiles"
-git clone https://github.com/fernandoflorez/dotfiles.git ~/.config
-cd ~/.config
+git clone https://github.com/fernandoflorez/dotfiles.git ~/projects/dotfiles
+cd ~/projects/dotfiles
 git submodule init
 git submodule update
 
-echo "Git config"
-git config --global user.name "Fernando Flórez"
-git config --global user.email "fernando@funciton.com"
-git config --global core.excludesfile ~/projects/dotfiles/gitignore_global
-git config --global init.defaultBranch dev
-git config --global core.pager delta
-git config --global interactive.diffFilter delta --color-only
-git config --global delta.navigate true
-git config --global delta.side-by-side true
-git config --global merge.conflictStyle diff3
-git config --global diff.colorMoved default
-
 echo "Installing Brewfile"
-cd; brew bundle --file ~/.config/Brewfile
+brew bundle
 
-#echo "Installing GAM"
-#bash <(curl -s -S -L https://git.io/install-gam)
+echo "Installing nv"
+curl -fsSl https://raw.githubusercontent.com/fernandoflorez/nv/master/setup.sh | bash
 
-echo "Installing v"
-curl -fsSl https://raw.githubusercontent.com/fernandoflorez/v/master/setup.sh | bash
+stow --target $HOME alacritty git gnupg tmux zsh
 
-echo "Creating dotfile links"
-ln -s ~/.config/bashrc ~/.bash_profile
-ln -s ~/.config/zshrc ~/.zshrc
-ln -s ~/.config/profile ~/.profile
-
-echo "setup gnupg"
+# set permissions to gnupg
 chown -R $(whoami) ~/.config/gnupg/
 find ~/.config/gnupg -type f -exec chmod 600 {} \;
 find ~/.config/gnupg -type d -exec chmod 700 {} \;
@@ -67,17 +49,10 @@ fi
 echo "Cleaning up brew"
 brew cleanup
 
-# Setup tailscale
-echo "installing tailscale"
-if ! [ -n tailscale ]; then
-    go install tailscale.com/cmd/tailscale{,d}@main
-    sudo $HOME/go/bin/tailscaled install-system-daemon
-fi
-
-echo "Setup certbot cloudflare plugin"
-$(brew --prefix certbot)/libexec/bin/python -m pip install certbot-dns-cloudflare
-
 echo "Mac OS customization"
+
+# do not create .DS_Store
+defaults write com.apple.desktopservices DSDontWriteNetworkStores true
 
 # speedy wake up to 24 hours
 sudo pmset -a standbydelay 86400

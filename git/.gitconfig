@@ -1,0 +1,17 @@
+[user]
+	name = Fernando Flórez
+	email = fernando@funciton.com
+[core]
+	excludesfile = /Users/fernando/.gitignore_global
+	pager = delta
+[init]
+	defaultBranch = dev
+[interactive]
+	diffFilter = delta
+[delta]
+	navigate = true
+	side-by-side = true
+[merge]
+	conflictStyle = diff3
+[diff]
+	colorMoved = default
