@@ -25,16 +25,12 @@ mkdir ~/projects
 echo "Cloning dotfiles"
 git clone https://github.com/fernandoflorez/dotfiles.git ~/projects/dotfiles
 cd ~/projects/dotfiles
-git submodule init
-git submodule update
+git submodule update --init
 
 echo "Installing Brewfile"
 brew bundle
 
-echo "Installing nv"
-curl -fsSl https://raw.githubusercontent.com/fernandoflorez/nv/master/setup.sh | bash
-
-stow --target $HOME alacritty git gnupg tmux zsh
+stow --target $HOME alacritty git gnupg tmux zsh nvim
 
 # set permissions to gnupg
 chown -R $(whoami) ~/.config/gnupg/
