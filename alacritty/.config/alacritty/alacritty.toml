@@ -1,6 +1,7 @@
 import = [
     "~/.config/alacritty/theme.toml"
 ]
+live_config_reload = true
 
 [cursor]
 style = "Block"
@@ -20,7 +21,8 @@ history = 10000
 multiplier = 3
 
 [window]
-decorations = "Full"
-opacity = 1.0
+decorations = "Buttonless"
+opacity = 0.9
 startup_mode = "Maximized"
+padding = { x = 3, y = 3 }
 dynamic_padding = true
