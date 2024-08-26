@@ -1,6 +1,7 @@
 gnupg/.config/gnupg/reader_0.status
 gnupg/.config/gnupg/sshcontrol
 gnupg/.config/gnupg/private-keys-v1.d/*
+gnupg/.config/gnupg/pubring.kbx
 tmux/.config/tmux/plugins/*
 tmux/.config/tmux/tpm/*
 tmux/.config/tmux/plugins/*
