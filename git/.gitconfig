@@ -7,7 +7,7 @@
 [init]
 	defaultBranch = dev
 [interactive]
-	diffFilter = delta
+	diffFilter = delta --color-only
 [delta]
 	navigate = true
 	side-by-side = true
