@@ -86,7 +86,7 @@ then
 
     setopt PROMPT_SUBST
     DEFAULT_PROMPT='%B%F{red}%m %F{blue}» %F{yellow}%~%F{white} $(declare -F __git_ps1 &>/dev/null && __git_ps1 "(%s) ")\$%b%f '
-    TRANSIENT_PROMPT='%B%F{blue}❯%b%f '
+    TRANSIENT_PROMPT='%B%F{blue}\$%b%f '
     DEFAULT_RPROMPT=''
     TRANSIENT_RPROMPT='%b%F{yellow}$(date "+%d/%m %H:%M:%S")%f'
 
