@@ -178,7 +178,6 @@ alias g='git'
 complete -o default -o nospace -F _git g
 
 alias gs='git status'
-alias aws-get-instances='aws ec2 describe-instances --query "Reservations[].Instances[].[Tags[0].Value,State.Name,InstanceType,InstanceId,PrivateIpAddress,PublicDnsName,PublicIpAddress]" --output table'
 alias mysql="mysql -uroot -h127.0.0.1 --prompt=mysql.local\>\ "
 alias cat="bat --theme=OneHalfDark"
 alias docker='podman'
