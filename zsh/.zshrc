@@ -30,30 +30,32 @@ then
 
         autoload -U +X bashcompinit && bashcompinit
         autoload -U +X compinit && compinit
+        autoload -Uz add-zsh-hook
 
         zstyle ':completion:*' special-dirs true
+
+        if [ -r `brew --prefix fzf`/shell/completion.zsh ]
+        then
+            source `brew --prefix fzf`/shell/completion.zsh
+            eval "$(fzf --zsh)"
+        fi
+
+        if [ -r `brew --prefix zsh-autosuggestions`/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]
+        then
+            source `brew --prefix zsh-autosuggestions`/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+        fi
+
+        if [ -r `brew --prefix zsh-syntax-highlighting`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]
+        then
+            source `brew --prefix zsh-syntax-highlighting`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        fi
+
     fi
 fi
 
 if [ -r `brew --prefix git`/etc/bash_completion.d/git-prompt.sh ]
 then
     source `brew --prefix git`/etc/bash_completion.d/git-prompt.sh
-fi
-
-if [ -r `brew --prefix zsh-autosuggestions`/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]
-then
-    source `brew --prefix zsh-autosuggestions`/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
-
-if [ -r `brew --prefix zsh-syntax-highlighting`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]
-then
-    source `brew --prefix zsh-syntax-highlighting`/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
-if [ -r `brew --prefix fzf`/shell/completion.zsh ]
-then
-    source `brew --prefix fzf`/shell/completion.zsh
-    eval "$(fzf --zsh)"
 fi
 
 if [ -r `brew --prefix z`/etc/profile.d/z.sh ]
@@ -83,7 +85,69 @@ if [ -n "${ZSH_VERSION:-}" ]
 then
 
     setopt PROMPT_SUBST
-    export PROMPT='%B%F{red}%m %F{blue}» %F{yellow}%~%F{white} $(declare -F __git_ps1 &>/dev/null && __git_ps1 "(%s) ")\$%b%f '
+    DEFAULT_PROMPT='%B%F{red}%m %F{blue}» %F{yellow}%~%F{white} $(declare -F __git_ps1 &>/dev/null && __git_ps1 "(%s) ")\$%b%f '
+    TRANSIENT_PROMPT='%B%F{blue}❯%b%f '
+    DEFAULT_RPROMPT=''
+    TRANSIENT_RPROMPT='%b%F{yellow}$(date "+%d/%m %H:%M:%S")%f'
+
+
+    function precmd() { 
+        PROMPT=$TRANSIENT_PROMPT
+        RPROMPT=$TRANSIENT_RPROMPT
+    }
+
+    add-zsh-hook precmd precmd
+
+    _reset_prompt() {
+        STORED_PROMPT=$PROMPT
+        STORED_RPROMPT=$RPROMPT
+        PROMPT=$DEFAULT_PROMPT
+        RPROMPT=$DEFAULT_RPROMPT
+    }
+
+    zle-line-finish() {
+        PROMPT=$STORED_PROMPT
+        RPROMPT=$STORED_RPROMPT
+        zle reset-prompt
+    }
+    zle -N zle-line-finish
+    add-zsh-hook precmd _reset_prompt
+
+    # hackon
+    function _hackon() {
+        local project=`find $PROJECTS_DIR -type d -mindepth 1 -maxdepth 1 -exec basename {} \; | sort -Vk1 --ignore-case | fzf --layout reverse --prompt="hackon~ "`
+        if [ -n "$project" ]; then
+            BUFFER="cd $PROJECTS_DIR$project"
+            zle accept-line
+        fi
+        zle reset-prompt
+    }
+    zle -N _hackon
+    bindkey "^f" _hackon
+
+    # aws
+    function _set_aws_profile() {
+        local profile=`aws --no-cli-pager configure list-profiles | fzf --layout reverse --prompt="aws profile~ "`
+        if [ -n "$profile" ]; then
+            export AWS_DEFAULT_PROFILE=$profile
+            export AWS_PROFILE=$profile
+            export AWS_PROFILE_REGION=$(aws configure get region)
+            DEFAULT_RPROMPT="%BAWS - %F{blue}$AWS_PROFILE %F{red}($AWS_PROFILE_REGION)%b%f"
+            zle accept-line
+        fi
+        zle reset-prompt
+    }
+    zle -N _set_aws_profile
+
+    function _unset_aws_profile() {
+        DEFAULT_RPROMPT=''
+        unset AWS_DEFAULT_PROFILE AWS_PROFILE AWS_PROFILE_REGION
+        zle accept-line
+        zle reset-prompt
+    }
+    zle -N _unset_aws_profile
+    bindkey "^p" _set_aws_profile
+    bindkey "^o" _unset_aws_profile
 
 fi
 
@@ -126,41 +190,6 @@ export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 
 GNUPGCONFIG="${GNUPGHOME:-"$HOME/.config/gnupg"}/gpg-agent.conf"
-
-# hackon
-function _hackon() {
-    local project=`find $PROJECTS_DIR -type d -mindepth 1 -maxdepth 1 -exec basename {} \; | sort -Vk1 --ignore-case | fzf --layout reverse --prompt="hackon~ "`
-    if [ -n "$project" ]; then
-        BUFFER="cd $PROJECTS_DIR$project"
-        zle accept-line
-    fi
-    zle reset-prompt
-}
-zle -N _hackon
-bindkey "^f" _hackon
-
-# aws
-function _set_aws_profile() {
-    local profile=`aws --no-cli-pager configure list-profiles | fzf --layout reverse --prompt="aws profile~ "`
-    if [ -n "$profile" ]; then
-        export AWS_DEFAULT_PROFILE=$profile
-        export AWS_PROFILE=$profile
-        export AWS_PROFILE_REGION=$(aws configure get region)
-        export RPROMPT="%b%F{blue}$AWS_PROFILE %F{red}($AWS_PROFILE_REGION)%f"
-        zle accept-line
-    fi
-    zle reset-prompt
-}
-zle -N _set_aws_profile
-
-function _unset_aws_profile() {
-    unset AWS_DEFAULT_PROFILE AWS_PROFILE AWS_PROFILE_REGION RPROMPT
-    zle accept-line
-    zle reset-prompt
-}
-zle -N _unset_aws_profile
-bindkey "^p" _set_aws_profile
-bindkey "^o" _unset_aws_profile
 
 # auto-start tmux
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
