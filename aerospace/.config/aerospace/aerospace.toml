@@ -10,6 +10,7 @@ default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
 key-mapping.preset = 'qwerty'
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed = ['move-mouse window-lazy-center']
 
 [gaps]
 inner.horizontal = 10
@@ -60,10 +61,10 @@ esc = 'mode main'
 enter = 'mode main'
 
 [mode.move.binding]
-alt-h = 'move left'
-alt-j = 'move down'
-alt-k = 'move up'
-alt-l = 'move right'
+alt-h = ['move left', 'mode main']
+alt-j = ['move down', 'mode main']
+alt-k = ['move up', 'mode main']
+alt-l = ['move right', 'mode main']
 alt-shift-h = ['move-node-to-workspace h', 'mode main']
 alt-shift-j = ['move-node-to-workspace j', 'mode main']
 alt-shift-k = ['move-node-to-workspace k', 'mode main']
@@ -74,5 +75,5 @@ enter = 'mode main'
 [mode.service.binding]
 r = ['reload-config', 'mode main']
 shift-r = ['flatten-workspace-tree', 'mode main']
-# f = ['layout floating tiling', 'mode main']
+f = ['layout floating tiling', 'mode main']
 esc = 'mode main'
