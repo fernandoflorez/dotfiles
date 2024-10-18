@@ -77,3 +77,19 @@ r = ['reload-config', 'mode main']
 shift-r = ['flatten-workspace-tree', 'mode main']
 f = ['layout floating tiling', 'mode main']
 esc = 'mode main'
+
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac '
+run = "move-node-to-workspace l"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Music'
+run = "move-node-to-workspace k"
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = "move-node-to-workspace j"
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = "move-node-to-workspace j"
