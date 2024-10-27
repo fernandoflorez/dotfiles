@@ -7,6 +7,7 @@ export CPPFLAGS=-Qunused-arguments
 export GNUPGHOME=$HOME/.config/gnupg
 export EDITOR="nvim"
 export PROJECTS_DIR=$HOME/projects/
+export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
 
 # init brew shell env
 if [[ "$(/usr/bin/uname -m)" == "arm64" ]]
