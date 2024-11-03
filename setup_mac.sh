@@ -119,6 +119,10 @@ defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName Fl
 # Prevent Time Machine from prompting to use new hard drive as backup volume
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
+# Save screenshots on Downloads folder and do not display screenshot previews
+defaults write com.apple.screencapture location ~/Downloads
+defaults write com.apple.screencapture show-thumbnail -bool FALSE
+
 killall Finder
 killall Dock
 killall SystemUIServer
