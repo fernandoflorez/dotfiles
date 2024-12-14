@@ -86,10 +86,10 @@ if [ -n "${ZSH_VERSION:-}" ]
 then
 
     setopt PROMPT_SUBST
-    DEFAULT_PROMPT='%B%F{red}%m %F{blue}» %F{yellow}%~%F{white} $(declare -F __git_ps1 &>/dev/null && __git_ps1 "(%s) ")\$%b%f '
-    TRANSIENT_PROMPT='%B%F{blue}\$%b%f '
+    DEFAULT_PROMPT='%F{red}%m %F{blue}» %F{yellow}%~%F{white} $(declare -F __git_ps1 &>/dev/null && __git_ps1 "(%s) ")\$%f '
+    TRANSIENT_PROMPT='%F{blue}\$%f '
     DEFAULT_RPROMPT=''
-    TRANSIENT_RPROMPT='%b%F{yellow}$(date "+%d/%m %H:%M:%S")%f'
+    TRANSIENT_RPROMPT='%F{blue}$(date "+%d/%m %H:%M:%S")%f'
 
 
     function precmd() { 
@@ -180,7 +180,7 @@ complete -o default -o nospace -F _git g
 
 alias gs='git status'
 alias mysql="mysql -uroot -h127.0.0.1 --prompt=mysql.local\>\ "
-alias cat="bat --theme=OneHalfDark"
+alias cat="bat --theme=rose-pine-moon --style=numbers,changes"
 alias docker='podman'
 alias vi='nvim'
 alias ls='eza --icons auto --group-directories-first'
