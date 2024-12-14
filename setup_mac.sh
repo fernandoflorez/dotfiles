@@ -30,7 +30,8 @@ git submodule update --init
 echo "Installing Brewfile"
 brew bundle
 
-stow --target $HOME alacritty git gnupg tmux zsh nvim aerospace
+stow --target $HOME alacritty git gnupg tmux zsh nvim aerospace bat
+bat cache --build
 
 # set permissions to gnupg
 chown -R $(whoami) ~/.config/gnupg/
