@@ -64,6 +64,10 @@ then
     source `brew --prefix z`/etc/profile.d/z.sh
 fi
 
+if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
+    builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/zsh/ghostty-integration"
+fi
+
 if hash fd 2> /dev/null
 then
     export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
