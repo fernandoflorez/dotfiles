@@ -91,9 +91,9 @@ then
 
     setopt PROMPT_SUBST
     DEFAULT_PROMPT='%F{red}%m %F{blue}» %F{yellow}%~%F{white} $(declare -F __git_ps1 &>/dev/null && __git_ps1 "(%s) ")\$%f '
-    TRANSIENT_PROMPT='%F{blue}\$%f '
+    TRANSIENT_PROMPT='%F{yellow}\$%f '
     DEFAULT_RPROMPT=''
-    TRANSIENT_RPROMPT='%F{blue}$(date "+%d/%m %H:%M:%S")%f'
+    TRANSIENT_RPROMPT='%F{yellow}$(date "+%d/%m %H:%M:%S")%f'
 
 
     function precmd() { 
