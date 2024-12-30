@@ -1,0 +1,4 @@
+zsh-users/zsh-autosuggestions kind:defer
+zdharma-continuum/fast-syntax-highlighting kind:defer
+zsh-git-prompt/zsh-git-prompt kind:defer
+jeffreytse/zsh-vi-mode kind:defer
