@@ -76,6 +76,11 @@ bindkey "^o" _unset_aws_profile
 eval $(`brew --prefix`/bin/brew shellenv)
 
 # helpers
+function _current_git_branch() {
+    local ref
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+    echo ${ref#refs/heads/}
+}
 function gpull() {
     git pull $1 $([[ $2 ]] && echo $2 || echo $(_current_git_branch))
 }
