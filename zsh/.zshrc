@@ -46,7 +46,6 @@ function _hackon() {
     zle reset-prompt
 }
 zle -N _hackon
-bindkey "^f" _hackon
 
 # aws
 function _set_aws_profile() {
@@ -69,8 +68,6 @@ function _unset_aws_profile() {
     zle reset-prompt
 }
 zle -N _unset_aws_profile
-bindkey "^p" _set_aws_profile
-bindkey "^o" _unset_aws_profile
 
 # init brew shell env
 eval $(`brew --prefix`/bin/brew shellenv)
@@ -151,3 +148,10 @@ if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
 fi
 
 source ${zsh_plugins}.zsh
+
+function zvm_after_init() {
+    bindkey -r '^N'
+    bindkey '^P' _set_aws_profile
+    bindkey "^O" _unset_aws_profile
+    bindkey "^F" _hackon
+}
