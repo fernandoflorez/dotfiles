@@ -101,7 +101,7 @@ fi
 
 autoload -Uz add-zsh-hook
 setopt PROMPT_SUBST
-DEFAULT_PROMPT='%F{red}%m %F{blue}» %F{yellow}%~%F{white} $(type git_super_status >/dev/null 2>&1 && git_super_status || echo "")\$%f '
+DEFAULT_PROMPT='%F{blue}» %F{yellow}%~%F{white}$(type git_super_status >/dev/null 2>&1 && git_super_status || echo "") \$%f '
 TRANSIENT_PROMPT='%F{yellow}\$%f '
 DEFAULT_RPROMPT=''
 TRANSIENT_RPROMPT='%F{yellow}$(date "+%d/%m %H:%M:%S")%f'
@@ -150,6 +150,7 @@ fi
 source ${zsh_plugins}.zsh
 
 function zvm_after_init() {
+    export ZSH_THEME_GIT_PROMPT_PREFIX=" ["
     bindkey -r '^N'
     bindkey '^P' _set_aws_profile
     bindkey "^O" _unset_aws_profile
