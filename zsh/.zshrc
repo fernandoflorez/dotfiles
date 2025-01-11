@@ -32,10 +32,6 @@ then
     }
 fi
 
-if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
-    builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/zsh/ghostty-integration"
-fi
-
 # hackon
 function _hackon() {
     local project=`find $PROJECTS_DIR -type d -mindepth 1 -maxdepth 1 -exec basename {} \; | sort -Vk1 --ignore-case | fzf --layout reverse --prompt="hackon~ "`
@@ -101,7 +97,7 @@ fi
 
 autoload -Uz add-zsh-hook
 setopt PROMPT_SUBST
-DEFAULT_PROMPT='%F{blue}» %F{yellow}%~%F{white}$(type git_super_status >/dev/null 2>&1 && git_super_status || echo "") \$%f '
+DEFAULT_PROMPT='%F{blue}» %F{yellow}%~%F{white}$(type git_super_status >/dev/null 2>&1 && echo " $(git_super_status)" || echo "") \$%f '
 TRANSIENT_PROMPT='%F{yellow}\$%f '
 DEFAULT_RPROMPT=''
 TRANSIENT_RPROMPT='%F{yellow}$(date "+%d/%m %H:%M:%S")%f'
@@ -150,7 +146,7 @@ fi
 source ${zsh_plugins}.zsh
 
 function zvm_after_init() {
-    export ZSH_THEME_GIT_PROMPT_PREFIX=" ["
+    export ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
     bindkey -r '^N'
     bindkey '^P' _set_aws_profile
     bindkey "^O" _unset_aws_profile
