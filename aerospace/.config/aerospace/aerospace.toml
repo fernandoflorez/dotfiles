@@ -79,7 +79,7 @@ f = ['layout floating tiling', 'mode main']
 esc = 'mode main'
 
 [[on-window-detected]]
-if.app-id = 'com.postmanlabs.mac '
+if.app-id = 'com.postmanlabs.mac'
 run = "move-node-to-workspace l"
 
 [[on-window-detected]]
