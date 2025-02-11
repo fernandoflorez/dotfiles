@@ -132,6 +132,7 @@ alias cat="bat --theme=rose-pine-moon --style=numbers,changes"
 alias docker='podman'
 alias vi='nvim'
 alias ls='eza --icons auto --group-directories-first'
+alias cz='uvx --from=commitizen cz'
 
 # antidote
 zsh_plugins=${ZDOTDIR:-~}/.zsh_plugins
