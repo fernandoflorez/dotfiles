@@ -152,4 +152,5 @@ function zvm_after_init() {
     bindkey '^P' _set_aws_profile
     bindkey "^O" _unset_aws_profile
     bindkey "^F" _hackon
+    source <(fzf --zsh)
 }
