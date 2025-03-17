@@ -127,12 +127,12 @@ add-zsh-hook precmd _reset_prompt
 # Aliases
 alias g='git'
 alias gs='git status'
-alias mysql="mysql -uroot -h127.0.0.1 --prompt=mysql.local\>\ "
 alias cat="bat --theme=rose-pine-moon --style=numbers,changes"
 alias docker='podman'
 alias vi='nvim'
 alias ls='eza --icons auto --group-directories-first'
 alias cz='uvx --from=commitizen cz'
+alias tldr='uvx tldr'
 
 # antidote
 zsh_plugins=${ZDOTDIR:-~}/.zsh_plugins
