@@ -63,10 +63,6 @@ defaults -currentHost write com.apple.controlcenter Bluetooth -int 2
 # Disabling system-wide resume
 defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
 
-# Right click on two finger tap
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool true
-
 # Disabling OS X Gate Keeper
 # (You'll be able to install any app you want from here on, not just Mac App Store apps)
 sudo spctl --master-disable
@@ -107,6 +103,10 @@ defaults write com.apple.AppleBluetoothMultitouchTrackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
+# Right click on two finger tap
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool true
+
 # Set mouse and trackpad speed
 defaults write -g com.apple.trackpad.scaling 3
 defaults write -g com.apple.mouse.scaling 3
@@ -115,7 +115,7 @@ defaults write -g com.apple.mouse.scaling 3
 defaults write com.apple.menuextra.clock DateFormat -string "EEE MMM d  HH:mm"
 
 # set default screensaver
-defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName Fliqlo path /Users/fernando/Library/Screen\ Savers/Fliqlo.saver
+# defaults -currentHost write com.apple.screensaver moduleDict -dict moduleName Fliqlo path /Users/fernando/Library/Screen\ Savers/Fliqlo.saver
 
 # Prevent Time Machine from prompting to use new hard drive as backup volume
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
