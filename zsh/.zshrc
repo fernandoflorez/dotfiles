@@ -66,7 +66,7 @@ function _unset_aws_profile() {
 zle -N _unset_aws_profile
 
 # init brew shell env
-eval $(`brew --prefix`/bin/brew shellenv)
+eval $(/opt/homebrew/bin/brew shellenv)
 
 # helpers
 function _current_git_branch() {
