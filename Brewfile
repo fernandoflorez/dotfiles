@@ -1,13 +1,9 @@
 tap "aws/tap"
 tap "charmbracelet/tap"
-tap "homebrew/bundle"
-tap "homebrew/services"
 tap "nikitabobko/tap"
-brew "abseil"
 brew "antidote"
 brew "openssl@3"
 brew "awscli"
-brew "awslogs"
 brew "bat"
 brew "borgbackup"
 brew "gnutls"
@@ -79,4 +75,3 @@ cask "transmit"
 cask "vorta"
 cask "whatsapp"
 mas "Brother iPrint&Scan", id: 1193539993
-mas "Merlin Project Express", id: 1202196869
