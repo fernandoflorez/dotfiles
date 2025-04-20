@@ -7,7 +7,6 @@ export CPPFLAGS=-Qunused-arguments
 export GNUPGHOME=$HOME/.config/gnupg
 export EDITOR="nvim"
 export PROJECTS_DIR=$HOME/projects/
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export ZSH_GIT_PROMPT_SHOW_BEHIND=0
 export ZSH_GIT_PROMPT_SHOW_AHEAD=0
 export ZSH_GIT_PROMPT_SHOW_REBASE=0
@@ -91,6 +90,7 @@ function change_gpg() {
 
 # GPG Agent
 GNUPGCONFIG="${GNUPGHOME:-"$HOME/.config/gnupg"}/gpg-agent.conf"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 if ! pgrep -x gpg-agent >/dev/null; then
     gpgconf --launch gpg-agent
 fi
