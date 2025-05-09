@@ -3,8 +3,9 @@ after-startup-command = []
 start-at-login = true
 enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = false
+automatically-unhide-macos-hidden-apps = true
 
-accordion-padding = 30
+accordion-padding = 10
 
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
@@ -13,12 +14,12 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 on-focus-changed = ['move-mouse window-lazy-center']
 
 [gaps]
-inner.horizontal = 10
-inner.vertical =   10
-outer.left =       10
-outer.bottom =     10
-outer.top =        10
-outer.right =      10
+inner.horizontal = 5
+inner.vertical =   5
+outer.left =       5
+outer.bottom =     5
+outer.top =        5
+outer.right =      5
 
 # All possible keys:
 # - Letters.        a, b, c, ..., z
@@ -79,7 +80,7 @@ f = ['layout floating tiling', 'mode main']
 esc = 'mode main'
 
 [[on-window-detected]]
-if.app-id = 'com.postmanlabs.mac'
+if.app-id = 'io.httpie.desktop'
 run = "move-node-to-workspace l"
 
 [[on-window-detected]]
@@ -95,5 +96,10 @@ if.app-id = 'net.whatsapp.WhatsApp'
 run = "move-node-to-workspace j"
 
 [[on-window-detected]]
+if.app-id = 'com.mongodb.compass'
+run = 'move-node-to-workspace l'
+
+[[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = 'layout floating'
+
