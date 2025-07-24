@@ -3,3 +3,5 @@ gnupg/.config/gnupg/*
 tmux/.config/tmux/plugins/*
 tmux/.config/tmux/tpm/*
 tmux/.config/tmux/plugins/*
+neomutt/*
+neomutt/.config/neomutt/certificates
