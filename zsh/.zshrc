@@ -33,7 +33,7 @@ fi
 
 # hackon
 function _hackon() {
-    local project=`find $PROJECTS_DIR -type d -mindepth 1 -maxdepth 1 -exec basename {} \; | sort -Vk1 --ignore-case | fzf --layout reverse --prompt="hackon~ "`
+    local project=`find . $PROJECTS_DIR -t d --exact-depth 1 -x basename {} \; | sort -Vk1 --ignore-case | fzf --layout reverse --prompt="hackon~ "`
     if [ -n "$project" ]; then
         BUFFER="cd $PROJECTS_DIR$project"
         zle accept-line
@@ -133,6 +133,8 @@ alias vi='nvim'
 alias ls='eza --icons auto --group-directories-first'
 alias cz='uvx --from=commitizen cz'
 alias tldr='uvx tldr'
+alias grep='rg'
+alias find='fd'
 
 # antidote
 zsh_plugins=${ZDOTDIR:-~}/.zsh_plugins
