@@ -1,4 +1,3 @@
-export PYENV_ROOT="$HOME/.pyenv"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export CFLAGS=-Qunused-arguments
@@ -16,11 +15,9 @@ export ZSH_GIT_PROMPT_SHOW_BISECT=0
 typeset -U PATH path
 
 path=(
-    "$PYENV_ROOT/bin"
     "/usr/local/opt/openjdk@11/bin"
     "/opt/homebrew/opt/fzf/bin"
     "$HOME/go/bin"
-    "$HOME/.lmstudio/bin"
     /usr/local/bin
     /usr/local/sbin
     $path
@@ -32,15 +29,7 @@ if [[ -x /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-pyenv() {
-    unfunction pyenv
-    if command -v pyenv &>/dev/null; then
-        eval "$(command pyenv init -)"
-    fi
-    pyenv "$@"
-}
-
-if command -v fd &>/dev/null; then  # [CAMBIO] command -v es más portable que hash
+if command -v fd &>/dev/null; then
     export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
@@ -69,31 +58,54 @@ function _hackon() {
 }
 zle -N _hackon
 
-# AWS profile selector
-function _set_aws_profile() {
-    local profile
-    profile=$(aws --no-cli-pager configure list-profiles | \
-              fzf --layout reverse --prompt="aws profile~ ")
-    
-    if [[ -n "$profile" ]]; then
-        export AWS_DEFAULT_PROFILE="$profile"
-        export AWS_PROFILE="$profile"
-        export AWS_PROFILE_REGION
-        AWS_PROFILE_REGION=$(aws configure get region)
-        DEFAULT_RPROMPT="%BAWS - %F{blue}$AWS_PROFILE %F{red}($AWS_PROFILE_REGION)%b%f"
-        zle accept-line
-    fi
-    zle reset-prompt
-}
-zle -N _set_aws_profile
 
-function _unset_aws_profile() {
-    DEFAULT_RPROMPT=''
-    unset AWS_DEFAULT_PROFILE AWS_PROFILE AWS_PROFILE_REGION
+# cloud selector
+function _set_cloud_profile() {
+    local selection provider profile
+    
+    selection=$(
+        {
+            aws --no-cli-pager configure list-profiles 2>/dev/null | sed 's/^/AWS: /'
+            gcloud projects list --format="value(projectId)" 2>/dev/null | sed 's/^/GCP: /'
+        } | fzf --layout reverse --prompt="cloud~ "
+    )
+    
+    [[ -z "$selection" ]] && { zle reset-prompt; return; }
+    
+    provider="${selection%%: *}"
+    profile="${selection#*: }"
+    
+    unset AWS_DEFAULT_PROFILE AWS_PROFILE AWS_PROFILE_REGION GCP_PROJECT CLOUD_PROVIDER
+    
+    case "$provider" in
+        AWS)
+            export CLOUD_PROVIDER="aws"
+            export AWS_DEFAULT_PROFILE="$profile"
+            export AWS_PROFILE="$profile"
+            export AWS_PROFILE_REGION=$(aws configure get region)
+            DEFAULT_RPROMPT="%B%F{yellow}AWS%f - %F{blue}$AWS_PROFILE %F{red}($AWS_PROFILE_REGION)%b%f"
+            ;;
+        GCP)
+            export CLOUD_PROVIDER="gcp"
+            export GCP_PROJECT="$profile"
+            gcloud config set project "$profile" >/dev/null 2>&1
+            DEFAULT_RPROMPT="%B%F{cyan}GCP%f - %F{blue}$GCP_PROJECT%b%f"
+            ;;
+    esac
+    
     zle accept-line
     zle reset-prompt
 }
-zle -N _unset_aws_profile
+zle -N _set_cloud_profile
+
+
+function _unset_cloud_profile() {
+    DEFAULT_RPROMPT=''
+    unset CLOUD_PROVIDER AWS_DEFAULT_PROFILE AWS_PROFILE AWS_PROFILE_REGION GCP_PROJECT
+    zle accept-line
+    zle reset-prompt
+}
+zle -N _unset_cloud_profile
 
 function _current_git_branch() {
     local ref
@@ -115,7 +127,7 @@ function change_gpg() {
     for key in $(gpg-connect-agent 'keyinfo --list' /bye 2>/dev/null | \
                  grep -v OK | \
                  awk '{if ($4 == "T") { print $3 ".key" }}'); do
-        rm -v "$GNUPGHOME/private-keys-v1.d/$key"  # [CAMBIO] Usar variable GNUPGHOME
+        rm -v "$GNUPGHOME/private-keys-v1.d/$key"
     done
     gpg --card-status &>/dev/null
 }
@@ -129,7 +141,7 @@ gpgconf --launch gpg-agent 2>/dev/null
 autoload -Uz add-zsh-hook
 setopt PROMPT_SUBST
 
-DEFAULT_PROMPT='%F{blue}» %F{yellow}%~%F{white}$(type gitprompt >/dev/null 2>&1 && echo " $(gitprompt)" || echo "") \$%f '
+DEFAULT_PROMPT='%F{blue}» %F{yellow}%~%F{white}$((( $+functions[gitprompt] )) && echo " $(gitprompt)")\$%f '
 TRANSIENT_PROMPT='%F{yellow}\$%f '
 DEFAULT_RPROMPT=''
 TRANSIENT_RPROMPT='%F{yellow}$(date "+%d/%m %H:%M:%S")%f'
@@ -163,7 +175,6 @@ alias docker='podman'
 alias vi='nvim'
 alias ls='eza --icons auto --group-directories-first'
 alias cz='uvx --from=commitizen cz'
-alias tldr='uvx tldr'
 alias grep='rg'
 alias find='fd'
 
@@ -189,8 +200,8 @@ source "${zsh_plugins}.zsh"
 function zvm_after_init() {
     export ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
     bindkey -r '^N'
-    bindkey '^P' _set_aws_profile
-    bindkey '^O' _unset_aws_profile  # [CAMBIO] Comillas consistentes
+    bindkey '^P' _set_cloud_profile
+    bindkey '^O' _unset_cloud_profile
     bindkey '^F' _hackon
     
     if command -v fzf &>/dev/null; then
