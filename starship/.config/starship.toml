@@ -1,0 +1,29 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$aws\
+$cmd_duration\
+$line_break\
+$character"""
+
+[directory]
+style = "yellow"
+
+[character]
+success_symbol = "[»](blue)"
+error_symbol = "[»](red)"
+vimcmd_symbol = "[»](green)"
+
+[git_branch]
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
+[aws]
+symbol = "☁️ "
+format = "[$symbol(AWS $profile )]($style)"
+
+[cmd_duration]
+style = "white"

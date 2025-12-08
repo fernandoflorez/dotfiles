@@ -5,12 +5,7 @@ export CPPFLAGS=-Qunused-arguments
 export GNUPGHOME="$HOME/.config/gnupg"
 export EDITOR="nvim"
 export PROJECTS_DIR="$HOME/projects/"
-
-export ZSH_GIT_PROMPT_SHOW_BEHIND=0
-export ZSH_GIT_PROMPT_SHOW_AHEAD=0
-export ZSH_GIT_PROMPT_SHOW_REBASE=0
-export ZSH_GIT_PROMPT_SHOW_MERGING=0
-export ZSH_GIT_PROMPT_SHOW_BISECT=0
+export ZVM_LAZY_KEYBINDINGS=true
 
 typeset -U PATH path
 
@@ -59,54 +54,6 @@ function _hackon() {
 zle -N _hackon
 
 
-# cloud selector
-function _set_cloud_profile() {
-    local selection provider profile
-    
-    selection=$(
-        {
-            aws --no-cli-pager configure list-profiles 2>/dev/null | sed 's/^/AWS: /'
-            gcloud projects list --format="value(projectId)" 2>/dev/null | sed 's/^/GCP: /'
-        } | fzf --layout reverse --prompt="cloud~ "
-    )
-    
-    [[ -z "$selection" ]] && { zle reset-prompt; return; }
-    
-    provider="${selection%%: *}"
-    profile="${selection#*: }"
-    
-    unset AWS_DEFAULT_PROFILE AWS_PROFILE AWS_PROFILE_REGION GCP_PROJECT CLOUD_PROVIDER
-    
-    case "$provider" in
-        AWS)
-            export CLOUD_PROVIDER="aws"
-            export AWS_DEFAULT_PROFILE="$profile"
-            export AWS_PROFILE="$profile"
-            export AWS_PROFILE_REGION=$(aws configure get region)
-            DEFAULT_RPROMPT="%B%F{yellow}AWS%f - %F{blue}$AWS_PROFILE %F{red}($AWS_PROFILE_REGION)%b%f"
-            ;;
-        GCP)
-            export CLOUD_PROVIDER="gcp"
-            export GCP_PROJECT="$profile"
-            gcloud config set project "$profile" >/dev/null 2>&1
-            DEFAULT_RPROMPT="%B%F{cyan}GCP%f - %F{blue}$GCP_PROJECT%b%f"
-            ;;
-    esac
-    
-    zle accept-line
-    zle reset-prompt
-}
-zle -N _set_cloud_profile
-
-
-function _unset_cloud_profile() {
-    DEFAULT_RPROMPT=''
-    unset CLOUD_PROVIDER AWS_DEFAULT_PROFILE AWS_PROFILE AWS_PROFILE_REGION GCP_PROJECT
-    zle accept-line
-    zle reset-prompt
-}
-zle -N _unset_cloud_profile
-
 function _current_git_branch() {
     local ref
     ref=$(git symbolic-ref HEAD 2>/dev/null) || return
@@ -121,52 +68,23 @@ function gpush() {
     git push "${1:?'Especifica el remote'}" "${2:-$(_current_git_branch)}"
 }
 
-# GPG key management
-function change_gpg() {
-    local key
-    for key in $(gpg-connect-agent 'keyinfo --list' /bye 2>/dev/null | \
-                 grep -v OK | \
-                 awk '{if ($4 == "T") { print $3 ".key" }}'); do
-        rm -v "$GNUPGHOME/private-keys-v1.d/$key"
-    done
-    gpg --card-status &>/dev/null
+function _aws-vault-switch() {
+  local profile
+  profile=$(aws-vault list --profiles | fzf --prompt="AWS~ " --reverse)
+  
+  if [[ -n "$profile" ]]; then
+    BUFFER="aws-vault exec $profile"
+    zle accept-line
+  fi
+  zle reset-prompt
 }
+zle -N _aws-vault-switch
 
 GNUPGCONFIG="${GNUPGHOME}/gpg-agent.conf"
-export SSH_AUTH_SOCK
-SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent 2>/dev/null
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 
 gpgconf --launch gpg-agent 2>/dev/null
-
-autoload -Uz add-zsh-hook
-setopt PROMPT_SUBST
-
-DEFAULT_PROMPT='%F{blue}» %F{yellow}%~%F{white}$((( $+functions[gitprompt] )) && echo " $(gitprompt)")\$%f '
-TRANSIENT_PROMPT='%F{yellow}\$%f '
-DEFAULT_RPROMPT=''
-TRANSIENT_RPROMPT='%F{yellow}$(date "+%d/%m %H:%M:%S")%f'
-
-function precmd() { 
-    PROMPT=$TRANSIENT_PROMPT
-    RPROMPT=$TRANSIENT_RPROMPT
-}
-
-add-zsh-hook precmd precmd
-
-_reset_prompt() {
-    STORED_PROMPT=$PROMPT
-    STORED_RPROMPT=$RPROMPT
-    PROMPT=$DEFAULT_PROMPT
-    RPROMPT=$DEFAULT_RPROMPT
-}
-
-zle-line-finish() {
-    PROMPT=$STORED_PROMPT
-    RPROMPT=$STORED_RPROMPT
-    zle reset-prompt
-}
-zle -N zle-line-finish
-add-zsh-hook precmd _reset_prompt
 
 alias g='git'
 alias gs='git status'
@@ -195,21 +113,15 @@ if [[ ! "${zsh_plugins}.zsh" -nt "${zsh_plugins}.txt" ]]; then
     antidote bundle <"${zsh_plugins}.txt" >|"${zsh_plugins}.zsh"
 fi
 
-source "${zsh_plugins}.zsh"
-
 function zvm_after_init() {
     export ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
-    bindkey -r '^N'
-    bindkey '^P' _set_cloud_profile
-    bindkey '^O' _unset_cloud_profile
+    bindkey '^P' _aws-vault-switch
     bindkey '^F' _hackon
-    
+
     if command -v fzf &>/dev/null; then
         source <(fzf --zsh)
     fi
 }
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/fernando/.lmstudio/bin"
-# End of LM Studio CLI section
-
+source "${zsh_plugins}.zsh"
+eval "$(starship init zsh)"
