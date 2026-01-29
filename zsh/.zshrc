@@ -73,7 +73,7 @@ function _aws-vault-switch() {
   profile=$(aws-vault list --profiles | fzf --prompt="AWS~ " --reverse)
   
   if [[ -n "$profile" ]]; then
-    BUFFER="aws-vault exec $profile"
+    BUFFER="aws-vault exec --no-session $profile"
     zle accept-line
   fi
   zle reset-prompt
