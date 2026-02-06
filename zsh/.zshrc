@@ -80,11 +80,8 @@ function _aws-vault-switch() {
 }
 zle -N _aws-vault-switch
 
-GNUPGCONFIG="${GNUPGHOME}/gpg-agent.conf"
 gpgconf --launch gpg-agent 2>/dev/null
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-
-gpgconf --launch gpg-agent 2>/dev/null
 
 alias g='git'
 alias gs='git status'
